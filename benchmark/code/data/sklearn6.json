@@ -1,0 +1,54 @@
+{
+    "error": [
+        "Traceback (most recent call last):",
+        "  File \"error.py\", line 29, in <module>",
+        "    test()",
+        "  File \"<string>\", line 6, in test",
+        "AttributeError: 'KMeans' object has no attribute 'labels_'",
+        ""
+    ],
+    "code": [
+        "from sklearn.cluster import KMeans",
+        "import numpy as np",
+        "",
+        "def test():",
+        "    km = KMeans()",
+        "    print(km.labels_)",
+        "    X = np.random.rand(100, 2)",
+        "    km.fit(X)"
+    ],
+    "context": [
+        "",
+        "You have to fit your `KMeans` object first for it to have a label attribute:",
+        "Without fitting it throws an error:",
+        "```",
+        "from sklearn.cluster import KMeans",
+        "km = KMeans()",
+        "print(km.labels_)",
+        ">>>AttributeError: 'KMeans' object has no attribute 'labels_'",
+        "```",
+        "",
+        "After fitting:",
+        "```",
+        "from sklearn.cluster import KMeans",
+        "import numpy as np",
+        "km = KMeans()",
+        "X = np.random.rand(100, 2)",
+        "km.fit(X)",
+        "print(km.labels_)",
+        ">>>[1 6 7 4 6 6 7 5 6 0 0 7 3 4 5 7 5 0 3 4 0 6 1 6 7 5 4 3 4 2 1 2 1 4 6 3 6 1 7 6 6 7 4 1 1 0 4 2 5 0 6 3 1 0 7 6 2 7 7 5 2 7 7 3 2 1 2 2 4 7 5 3 2 65 1 6 2 4 2 3 2 2 2 1 2 0 5 7 2 4 4 5 4 4 1 1 4 5 0]",
+        "```",
+        "",
+        ""
+    ],
+    "ideal": [
+        "from sklearn.cluster import KMeans",
+        "import numpy as np",
+        "",
+        "def test():",
+        "    km = KMeans()",
+        "    X = np.random.rand(100, 2)",
+        "    km.fit(X)",
+        "    print(km.labels_)"
+    ]
+}

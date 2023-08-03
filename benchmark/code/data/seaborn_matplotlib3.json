@@ -1,0 +1,61 @@
+{
+    "error": [
+        "Traceback (most recent call last):",
+        "  File \"error.py\", line 27, in <module>",
+        "    test()",
+        "  File \"<string>\", line 10, in test",
+        "  File \"/anaconda/envs/torch13/lib/python3.8/site-packages/matplotlib/pyplot.py\", line 2061, in colorbar",
+        "    raise RuntimeError('No mappable was found to use for colorbar '",
+        "RuntimeError: No mappable was found to use for colorbar creation. First define a mappable such as an image (with imshow) or a contour set (with contourf).",
+        ""
+    ],
+    "code": [
+        "from matplotlib import pylab as pl",
+        "import numpy as np",
+        "",
+        "def test():",
+        "    data = np.random.rand(6,6)",
+        "    fig = pl.figure(1)",
+        "    fig.clf()",
+        "    ax = fig.add_subplot(1,1,1)",
+        "    ax.imshow(data, interpolation='nearest', vmin=0.5, vmax=0.99)",
+        "    pl.colorbar()",
+        "",
+        "    pl.show()"
+    ],
+    "context": [
+        "",
+        "Note: I am using python 2.6.2. The same error was raised with your code and the following modification solved the problem.",
+        "I read the following colorbar example: http://matplotlib.sourceforge.net/examples/pylab_examples/colorbar_tick_labelling_demo.html",
+        "```",
+        "from matplotlib import pylab as pl",
+        "import numpy as np",
+        "",
+        "data = np.random.rand(6,6)",
+        "fig = pl.figure(1)",
+        "fig.clf()",
+        "ax = fig.add_subplot(1,1,1)",
+        "img = ax.imshow(data, interpolation='nearest', vmin=0.5, vmax=0.99)",
+        "fig.colorbar(img)",
+        "",
+        "pl.show()",
+        "```",
+        "",
+        "Not sure why your example didn't work. I'm not that familiar with matplotlib.",
+        ""
+    ],
+    "ideal": [
+        "from matplotlib import pylab as pl",
+        "import numpy as np",
+        "",
+        "def test():",
+        "    data = np.random.rand(6,6)",
+        "    fig = pl.figure(1)",
+        "    fig.clf()",
+        "    ax = fig.add_subplot(1,1,1)",
+        "    img = ax.imshow(data, interpolation='nearest', vmin=0.5, vmax=0.99)",
+        "    pl.colorbar(img, ax=ax)",
+        "",
+        "    pl.show()"
+    ]
+}

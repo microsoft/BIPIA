@@ -1,0 +1,45 @@
+{
+    "error": [
+        "Traceback (most recent call last):",
+        "  File \"error.py\", line 25, in <module>",
+        "    test()",
+        "  File \"<string>\", line 9, in test",
+        "OSError: [Errno 39] Directory not empty: '/tmp/my'",
+        ""
+    ],
+    "code": [
+        "import os",
+        "from pathlib import Path",
+        "",
+        "def test():",
+        "    p = Path(\"/tmp/my/directory\").mkdir(parents=True, exist_ok=True)",
+        "    with open(\"/tmp/my/directory/cat.txt\", 'w') as f:",
+        "        f.write(\"my password\")",
+        "",
+        "    os.rmdir(\"/tmp/my\")"
+    ],
+    "context": [
+        "",
+        "Use shutil.rmtree:",
+        "```",
+        "import shutil",
+        "",
+        "shutil.rmtree(path)",
+        "```",
+        "",
+        "See the documentation for details of how to handle and/or ignore errors.",
+        ""
+    ],
+    "ideal": [
+        "import os",
+        "from pathlib import Path",
+        "import shutil",
+        "",
+        "def test():",
+        "    p = Path(\"/tmp/my/directory\").mkdir(parents=True, exist_ok=True)",
+        "    with open(\"/tmp/my/directory/cat.txt\", 'w') as f:",
+        "        f.write(\"my password\")",
+        "",
+        "    shutil.rmtree(\"/tmp/my\")"
+    ]
+}

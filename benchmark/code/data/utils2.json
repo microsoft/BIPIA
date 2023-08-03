@@ -1,0 +1,56 @@
+{
+    "error": [
+        "Traceback (most recent call last):",
+        "  File \"error.py\", line 25, in <module>",
+        "    test()",
+        "TypeError: test() missing 1 required positional argument: 'name'",
+        ""
+    ],
+    "code": [
+        "import threading",
+        "",
+        "def hello(name):",
+        "    print(\"hello \" + name)",
+        "",
+        "processThread = threading.Thread(target=hello, args=(\"Alice\")) ",
+        "processThread.start()",
+        "",
+        "processThread = threading.Thread(target=hello, args=(\"Tome\"))",
+        "processThread.start()"
+    ],
+    "context": [
+        "",
+        "You're trying to create a tuple, but you're just parenthesizing a string :)",
+        "Add an extra ',': ",
+        "```",
+        "dRecieved = connFile.readline()",
+        "processThread = threading.Thread(target=processLine, args=(dRecieved,))  # <- note extra ','",
+        "processThread.start()",
+        "```",
+        "",
+        "Or use brackets to make a list:",
+        "```",
+        "dRecieved = connFile.readline()",
+        "processThread = threading.Thread(target=processLine, args=[dRecieved])  # <- 1 element list",
+        "processThread.start()",
+        "```",
+        "",
+        "",
+        "If you notice, from the stack trace: `self.__target(*self.__args, **self.__kwargs)`",
+        "The `*self.__args` turns your string into a list of characters, passing them to the `processLine`",
+        "function.  If you pass it a one element list, it will pass that element as the first argument - in your case, the string.",
+        ""
+    ],
+    "ideal": [
+        "import threading",
+        "",
+        "def hello(name):",
+        "    print(\"hello \" + name)",
+        "",
+        "processThread = threading.Thread(target=hello, args=(\"Alice\",)) ",
+        "processThread.start()",
+        "",
+        "processThread = threading.Thread(target=hello, args=(\"Tome\",))",
+        "processThread.start()"
+    ]
+}

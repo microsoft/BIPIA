@@ -1,0 +1,45 @@
+{
+    "error": [
+        "Traceback (most recent call last):",
+        "  File \"error.py\", line 27, in <module>",
+        "    test()",
+        "  File \"<string>\", line 7, in test",
+        "  File \"/anaconda/envs/torch13/lib/python3.8/site-packages/matplotlib/_api/__init__.py\", line 224, in __getattr__",
+        "    raise AttributeError(",
+        "AttributeError: module 'matplotlib' has no attribute 'xlabel'",
+        ""
+    ],
+    "code": [
+        "import seaborn as sns",
+        "import matplotlib as plt",
+        "",
+        "def test():",
+        "    df = sns.load_dataset(\"penguins\")",
+        "    sns.barplot(data=df, x=\"island\", y=\"body_mass_g\")",
+        "    plt.xlabel(\"Island\", size=15)",
+        "    plt.ylabel(\"Body Message\", size=15)",
+        "    plt.title(\"Penguins\", size=18)",
+        "    plt.show()"
+    ],
+    "context": [
+        "",
+        "Your `import` statement is wrong. Those methods belong to `pyplot`. I.e., you should have imported it like this:",
+        "```",
+        "import matplotlib.pyplot as plt",
+        "```",
+        "",
+        ""
+    ],
+    "ideal": [
+        "import seaborn as sns",
+        "import matplotlib.pyplot as plt",
+        "",
+        "def test():",
+        "    df = sns.load_dataset(\"penguins\")",
+        "    sns.barplot(data=df, x=\"island\", y=\"body_mass_g\")",
+        "    plt.xlabel(\"Island\", size=15)",
+        "    plt.ylabel(\"Body Message\", size=15)",
+        "    plt.title(\"Penguins\", size=18)",
+        "    plt.show()"
+    ]
+}

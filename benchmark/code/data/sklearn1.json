@@ -1,0 +1,49 @@
+{
+    "error": [
+        "/anaconda/envs/torch13/lib/python3.8/site-packages/sklearn/metrics/_classification.py:1344: UndefinedMetricWarning: Precision and F-score are ill-defined and being set to 0.0 in labels with no predicted samples. Use `zero_division` parameter to control this behavior._warn_prf(average, modifier, msg_start, len(result))"
+    ],
+    "code": [
+        "import sklearn.metrics as metrics",
+        "",
+        "def test():",
+        "    y_true = [0, 1, 2, 0, 1, 2]",
+        "    y_pred = [1, 1, 1, 1, 1, 1]",
+        "    rslt = metrics.precision_recall_fscore_support(y_true, y_pred, average=\"weighted\")",
+        "    return rslt"
+    ],
+    "context": [
+        "",
+        "As mentioned in the comments, some labels in `y_test` don't appear in `y_pred`. Specifically in this case, label '2' is never predicted:",
+        "```",
+        ">>> set(y_test) - set(y_pred)",
+        "{2}",
+        "```",
+        "",
+        "This means that there is no F-score to calculate for this label, and thus the F-score for this case is considered to be 0.0. Since you requested an average of the score, you must take into account that a score of 0 was included in the calculation, and this is why scikit-learn is showing you that warning.",
+        "This brings me to you not seeing the error a second time. As I mentioned, this is a warning, which is treated differently from an error in python. The default behavior in most environments is to show a specific warning only once. This behavior can be changed:",
+        "```",
+        "import warnings",
+        "warnings.filterwarnings('always')  # \"error\", \"ignore\", \"always\", \"default\", \"module\" or \"once\"",
+        "```",
+        "",
+        "If you set this before importing the other modules, you will see the warning every time you run the code.",
+        "There is no way to avoid seeing this warning the first time, aside for setting `warnings.filterwarnings('ignore')`. What you can do, is decide that you are not interested in the scores of labels that were not predicted, and then explicitly specify the labels you are interested in (which are labels that were predicted at least once):",
+        "```",
+        ">>> metrics.f1_score(y_test, y_pred, average='weighted', labels=np.unique(y_pred))",
+        "0.91076923076923078",
+        "```",
+        "",
+        "The warning will be gone.",
+        ""
+    ],
+    "ideal": [
+        "import sklearn.metrics as metrics",
+        "import numpy as np",
+        "",
+        "def test():",
+        "    y_true = [0, 1, 2, 0, 1, 2]",
+        "    y_pred = [1, 1, 1, 1, 1, 1]",
+        "    rslt = metrics.precision_recall_fscore_support(y_true, y_pred, average=\"weighted\", labels=np.unique(y_pred))",
+        "    return rslt"
+    ]
+}

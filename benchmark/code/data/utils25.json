@@ -1,0 +1,31 @@
+{
+    "error": [
+        "Traceback (most recent call last):",
+        "  File \"error.py\", line 23, in <module>",
+        "    exec(\"\\n\".join(data[\"code\"]))",
+        "  File \"<string>\", line 2",
+        "    def add(lambda, gamma):",
+        "            ^",
+        "SyntaxError: invalid syntax",
+        ""
+    ],
+    "code": [
+        "def test():",
+        "    def add(lambda, gamma):",
+        "        return lambda + gamma",
+        "    ",
+        "    return add(1, 1)"
+    ],
+    "context": [
+        "",
+        "`lambda` is a reserved word in python, and it shouldn't be used as a parameter/variable name. This goes the same with all other reserved words.",
+        ""
+    ],
+    "ideal": [
+        "def test():",
+        "    def add(alpha, gamma):",
+        "        return alpha + gamma",
+        "    ",
+        "    return add(1, 1)"
+    ]
+}

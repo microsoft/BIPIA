@@ -1,0 +1,52 @@
+{
+    "error": [
+        "Traceback (most recent call last):",
+        "  File \"error.py\", line 27, in <module>",
+        "    exec(\"\\n\".join(data[\"code\"]))",
+        "  File \"<string>\", line 11, in <module>",
+        "TypeError: __init__() takes 1 positional argument but 2 were given",
+        ""
+    ],
+    "code": [
+        "import pandas as pd",
+        "import numpy as np",
+        "",
+        "def test():",
+        "    data = {\"a\": ['1', '3', '4', '5', '6'], \"b\": ['is', 'am', 'island', 'icream', \"banana\"]}",
+        "    df = pd.DataFrame.from_dict(data)",
+        "    ",
+        "    return not df['a'].str.contains(\"is\")"
+    ],
+    "context": [
+        "",
+        "You can use the invert (~) operator (which acts like a not for boolean data):",
+        "```",
+        "new_df = df[~df[\"col\"].str.contains(word)]",
+        "```",
+        "",
+        "where `new_df` is the copy returned by RHS.",
+        "contains also accepts a regular expression...",
+        "",
+        "If the above throws a ValueError or TypeError, the reason is likely because you have mixed datatypes, so use `na=False`:",
+        "```",
+        "new_df = df[~df[\"col\"].str.contains(word, na=False)]",
+        "```",
+        "",
+        "Or,",
+        "```",
+        "new_df = df[df[\"col\"].str.contains(word) == False]",
+        "```",
+        "",
+        ""
+    ],
+    "ideal": [
+        "import pandas as pd",
+        "import numpy as np",
+        "",
+        "def test():",
+        "    data = {\"a\": ['1', '3', '4', '5', '6'], \"b\": ['is', 'am', 'island', 'icream', \"banana\"]}",
+        "    df = pd.DataFrame.from_dict(data)",
+        "    ",
+        "    return ~df['a'].str.contains(\"is\")"
+    ]
+}

@@ -1,0 +1,62 @@
+{
+    "error": [
+        "Traceback (most recent call last):",
+        "  File \"error.py\", line 26, in <module>",
+        "    test()",
+        "  File \"<string>\", line 9, in test",
+        "  File \"/anaconda/envs/torch13/lib/python3.8/site-packages/requests/api.py\", line 73, in get",
+        "    return request(\"get\", url, params=params, **kwargs)",
+        "  File \"/anaconda/envs/torch13/lib/python3.8/site-packages/requests/api.py\", line 59, in request",
+        "    return session.request(method=method, url=url, **kwargs)",
+        "  File \"/anaconda/envs/torch13/lib/python3.8/site-packages/requests/sessions.py\", line 577, in request",
+        "    settings = self.merge_environment_settings(",
+        "  File \"/anaconda/envs/torch13/lib/python3.8/site-packages/requests/sessions.py\", line 758, in merge_environment_settings",
+        "    no_proxy = proxies.get(\"no_proxy\") if proxies is not None else None",
+        "AttributeError: 'set' object has no attribute 'get'",
+        ""
+    ],
+    "code": [
+        "import requests",
+        "",
+        "def test():",
+        "    headers = {",
+        "        \"User-Agent\": \"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36\"",
+        "    }",
+        "    URL = \"https://google.com\"",
+        "    PROXY = {\"https://proxy.com:8080\"}",
+        "    response = requests.get(URL, proxies=PROXY, headers=headers)",
+        "    return response"
+    ],
+    "context": [
+        "",
+        "There are at least two problems you should fix:",
+        "",
+        "The proxies parameter should be a dict, not a set.",
+        "You have a syntax error in your headers parameter.",
+        "",
+        "Try this instead:",
+        "```",
+        "headers = {'User-Agent': 'Mozilla/5.0...'}",
+        "url = 'http://www.yoursite.com/'",
+        "proxies = {",
+        "    'http': 'http://surfproxy.de.db.com:8080',",
+        "    'https': 'http://surfproxy.de.db.com:8080'",
+        "}",
+        "response = requests.get(url , proxies=proxies, headers=headers)",
+        "```",
+        "",
+        ""
+    ],
+    "ideal": [
+        "import requests",
+        "",
+        "def test():",
+        "    headers = {",
+        "        \"User-Agent\": \"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36\"",
+        "    }",
+        "    URL = \"https://google.com\"",
+        "    PROXY = {'https': \"https://proxy.com:8080\"}",
+        "    response = requests.get(URL, proxies=PROXY, headers=headers)",
+        "    return response"
+    ]
+}

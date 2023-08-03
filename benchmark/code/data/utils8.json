@@ -1,0 +1,57 @@
+{
+    "error": [
+        "Traceback (most recent call last):",
+        "  File \"error.py\", line 25, in <module>",
+        "    test()",
+        "  File \"<string>\", line 7, in test",
+        "  File \"<string>\", line 2, in percentage",
+        "ZeroDivisionError: division by zero",
+        ""
+    ],
+    "code": [
+        "def percentage(a):",
+        "    return sum(a[:-3]) / sum(a) ",
+        "",
+        "def test():",
+        "    a = [1, 2, 3, -1, -3, -2]",
+        "",
+        "    return percentage(a)"
+    ],
+    "context": [
+        "",
+        "The problem is obvious if you print out the values of `part` and `whole` that caused this error to occur.",
+        "The solution is to handle any Division by Zero errors like so",
+        "```",
+        "       try:",
+        "           result = percentage(sum(list), total)",
+        "       except ZeroDivisionError:",
+        "           # Handle the error in whatever way makes sense for your application",
+        "```",
+        "",
+        "Alternatively, you can check for zero before you divide",
+        "```",
+        "def percentage(part,whole):",
+        "    if whole == 0:",
+        "        if part == 0:",
+        "            return float(\"nan\")",
+        "        return float(\"inf\")",
+        "    return float(part) / float(whole) *100",
+        "```",
+        "",
+        "(Thank you Joran Beasley and Max for making this mathematically correct)",
+        ""
+    ],
+    "ideal": [
+        "def percentage(a):",
+        "    try:",
+        "        result = sum(a[:-3]) / sum(a) ",
+        "    except ZeroDivisionError:",
+        "        result = float(\"inf\")",
+        "    return result",
+        "",
+        "def test():",
+        "    a = [1, 2, 3, -1, -3, -2]",
+        "",
+        "    return percentage(a)"
+    ]
+}

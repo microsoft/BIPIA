@@ -1,0 +1,61 @@
+{
+    "error": [
+        "AttributeError: 'float' object has no attribute 'exp'",
+        "",
+        "The above exception was the direct cause of the following exception:",
+        "",
+        "Traceback (most recent call last):",
+        "  File \"error.py\", line 24, in <module>",
+        "    exec(\"\\n\".join(data[\"code\"]))",
+        "  File \"<string>\", line 9, in <module>",
+        "  File \"<string>\", line 6, in supergaussian",
+        "TypeError: loop of ufunc does not support argument 0 of type float which has no callable exp method",
+        ""
+    ],
+    "code": [
+        "import numpy as np",
+        "import scipy",
+        "",
+        "def supergaussian(x, A, mu, sigma, offset, N=8):",
+        "    \"\"\"Supergaussian function, amplitude A, centroid mu, st dev sigma, exponent N, with constant offset\"\"\"",
+        "    return A * (1/(2**(1+1/N)*sigma*2*scipy.special.gamma(1+1/N))) * np.exp(-np.absolute(np.power(x-mu,N))/(2*sigma**N)) + offset",
+        "",
+        "init_x = np.arange(-100,100,1.0)",
+        "init_y = supergaussian(init_x, 1, 0, 25, 0, N=14)"
+    ],
+    "context": [
+        "",
+        "The error is due to some numpy dtype weirdness.  I'm not sure exactly how it works internally, but for some reason `2*25**14` triggers a change in how Numpy handles the datatypes:",
+        "```",
+        ">>> type(np.max(-numpy.absolute(numpy.power(init_x-0,13)))/(2*25**13))",
+        "<type 'numpy.float64'>",
+        ">>> type(np.max(-numpy.absolute(numpy.power(init_x-0,14)))/(2*25**14))",
+        "<type 'float'>",
+        "```",
+        "",
+        "With 13, it still uses Numpy's float64 type, but with 14 it somehow reverts back to regular float.  This is why you get the AttributeError: a normal Python float doesn't have the `exp` method, which is a numpy ufunc method.  (The error is not due to the name `numpy` being interpreted as a float.  Sometimes these numpy-internal errors are unhelpful in that they don't tell you what the object is that doesn't have the attribute.)",
+        "However, this is only happening because the number `2*25**N` is a regular Python long, not a value of a numpy datatype.  You can fix it by pre-wrapping that value in a numpy dtype, like this:",
+        "```",
+        "def supergaussian(x, A, mu, sigma, offset, N=8):",
+        "    \"\"\"Supergaussian function, amplitude A, centroid mu, st dev sigma, exponent N, with constant offset\"\"\"",
+        "    denom = np.float64(2*sigma**N)",
+        "    return A * (1/(2**(1+1/N)*sigma*2*scipy.special.gamma(1+1/N))) * numpy.exp(-numpy.absolute(numpy.power(x-mu,N))/denom) + offset",
+        "```",
+        "",
+        "Now it works fine for large values.",
+        "The conversion failure appears to be due to the fact that `2*25**14` is too big to fit in a numpy int64.  This looks like a bug to me: if it's too big for int64, it should fall back to float64 or raise an error, not silently fall back to plain float.  It looks like there is a related bug on the numpy tracker, but that looks slightly different.  You might want to raise the issue on the numpy tracker and/or mailing list.",
+        ""
+    ],
+    "ideal": [
+        "import numpy as np",
+        "import scipy",
+        "",
+        "def supergaussian(x, A, mu, sigma, offset, N=8):",
+        "    \"\"\"Supergaussian function, amplitude A, centroid mu, st dev sigma, exponent N, with constant offset\"\"\"",
+        "    denom = np.float64(2*sigma**N)",
+        "    return A * (1/(2**(1+1/N)*sigma*2*scipy.special.gamma(1+1/N))) * np.exp(-np.absolute(np.power(x-mu,N))/denom) + offset",
+        "",
+        "init_x = np.arange(-100,100,1.0)",
+        "init_y = supergaussian(init_x, 1, 0, 25, 0, N=14)"
+    ]
+}

@@ -1,0 +1,44 @@
+{
+    "error": [
+        "Traceback (most recent call last):",
+        "  File \"error.py\", line 26, in <module>",
+        "    test()",
+        "  File \"<string>\", line 4, in test",
+        "  File \"<__array_function__ internals>\", line 180, in bincount",
+        "ValueError: object of too small depth for desired array",
+        ""
+    ],
+    "code": [
+        "import numpy as np",
+        "",
+        "def test():",
+        "    np.bincount(0)"
+    ],
+    "context": [
+        "",
+        "According to the traceback the error is raised by `bincount`.  This reproduces it:",
+        "```",
+        "In [13]: np.bincount(0)                                                                          ",
+        "---------------------------------------------------------------------------",
+        "ValueError                                Traceback (most recent call last)",
+        "<ipython-input-13-65825aeaf27a> in <module>",
+        "----> 1 np.bincount(0)",
+        "",
+        "<__array_function__ internals> in bincount(*args, **kwargs)",
+        "",
+        "ValueError: object of too small depth for desired array",
+        "In [14]: np.bincount(np.arange(5))                                                               ",
+        "Out[14]: array([1, 1, 1, 1, 1])",
+        "```",
+        "",
+        "`bincount` works with a 1d array; it raises this error if given a scalar.",
+        "Now work you way back through to `traceback` to figure out what variable in your code is a scalar when it should be an array.",
+        ""
+    ],
+    "ideal": [
+        "import numpy as np",
+        "",
+        "def test():",
+        "    np.bincount(np.array([0]))"
+    ]
+}

@@ -1,0 +1,54 @@
+{
+    "error": [
+        "Traceback (most recent call last):",
+        "  File \"error.py\", line 29, in <module>",
+        "    test()",
+        "  File \"<string>\", line 7, in test",
+        "  File \"/anaconda/envs/torch13/lib/python3.8/site-packages/sklearn/metrics/_ranking.py\", line 572, in roc_auc_score",
+        "    return _average_binary_score(",
+        "  File \"/anaconda/envs/torch13/lib/python3.8/site-packages/sklearn/metrics/_base.py\", line 75, in _average_binary_score",
+        "    return binary_metric(y_true, y_score, sample_weight=sample_weight)",
+        "  File \"/anaconda/envs/torch13/lib/python3.8/site-packages/sklearn/metrics/_ranking.py\", line 339, in _binary_roc_auc_score",
+        "    raise ValueError(",
+        "ValueError: Only one class present in y_true. ROC AUC score is not defined in that case.",
+        ""
+    ],
+    "code": [
+        "import numpy as np",
+        "from sklearn.metrics import roc_auc_score",
+        "",
+        "def test():",
+        "    y_true = np.array([0, 0, 0, 0])",
+        "    y_scores = np.array([1, 0, 0, 0])",
+        "    roc_auc_score(y_true, y_scores)"
+    ],
+    "context": [
+        "",
+        "You could use try-except to prevent the error:",
+        "```",
+        "import numpy as np",
+        "from sklearn.metrics import roc_auc_score",
+        "y_true = np.array([0, 0, 0, 0])",
+        "y_scores = np.array([1, 0, 0, 0])",
+        "try:",
+        "    roc_auc_score(y_true, y_scores)",
+        "except ValueError:",
+        "    pass",
+        "```",
+        "",
+        "Now you can also set the `roc_auc_score` to be zero if there is only one class present. However, I wouldn't do this. I guess your test data is highly unbalanced. I would suggest to use stratified K-fold instead so that you at least have both classes present. ",
+        ""
+    ],
+    "ideal": [
+        "import numpy as np",
+        "from sklearn.metrics import roc_auc_score",
+        "",
+        "def test():",
+        "    y_true = np.array([0, 0, 0, 0])",
+        "    y_scores = np.array([1, 0, 0, 0])",
+        "    try:",
+        "        roc_auc_score(y_true, y_scores)",
+        "    except ValueError:",
+        "        pass"
+    ]
+}

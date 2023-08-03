@@ -1,0 +1,3 @@
+load_8bit: False
+model_name: xxx
+llm_name: "vicuna"

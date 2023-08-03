@@ -1,0 +1,34 @@
+{
+    "error": [
+        "Traceback (most recent call last):",
+        "  File \"error.py\", line 24, in <module>",
+        "    test()",
+        "  File \"<string>\", line 5, in test",
+        "TypeError: tile(): argument 'input' (position 1) must be Tensor, not torch.return_types.max",
+        ""
+    ],
+    "code": [
+        "import torch",
+        "",
+        "def test():",
+        "    x = torch.randn(4, 4)",
+        "    print(torch.tile(torch.max(x, dim=1), (2, 2)))"
+    ],
+    "context": [
+        "",
+        "For this error to be true, you have to be using some `dim=?`, because only then torch.max will return a tuple of `(values, indices)`.",
+        "You can fix that error by using only the first output:",
+        "```",
+        "torch.tile(torch.max(x, dim=0)[0], (1, 1, 1, 5))",
+        "```",
+        "",
+        ""
+    ],
+    "ideal": [
+        "import torch",
+        "",
+        "def test():",
+        "    x = torch.randn(4, 4)",
+        "    print(torch.tile(torch.max(x, dim=1)[0], (2, 2)))"
+    ]
+}

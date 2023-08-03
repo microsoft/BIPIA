@@ -1,0 +1,35 @@
+{
+    "error": [
+        "Traceback (most recent call last):",
+        "  File \"error.py\", line 26, in <module>",
+        "    test()",
+        "  File \"<string>\", line 7, in test",
+        "AssertionError: np.delete doesn't work",
+        ""
+    ],
+    "code": [
+        "import numpy as np",
+        "",
+        "def test():",
+        "    x = np.arange(100)",
+        "    np.delete(x, 10)",
+        "",
+        "    assert x[10] != 10, \"np.delete doesn't work\""
+    ],
+    "context": [
+        "",
+        "`numpy.delete()` is not an in-place operation, and returns a new copy of your array that has been operated on. As a result, `ponto` itself is never changed, you just return a changed copy of it and do nothing with it. Assign a new variable to your `numpy.delete()` statements, and print that. ",
+        "Also note `try-except-pass` is inherently evil and you could in fact have 100 things wrong in your code without knowing as it will hide all the errors. ",
+        "You can find the documentation concerning `numpy.delete` which explains this behavior here.",
+        ""
+    ],
+    "ideal": [
+        "import numpy as np",
+        "",
+        "def test():",
+        "    x = np.arange(100)",
+        "    x = np.delete(x, 10)",
+        "",
+        "    assert x[10] != 10, \"np.delete doesn't work\""
+    ]
+}

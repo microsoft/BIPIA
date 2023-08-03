@@ -1,0 +1,39 @@
+{
+    "error": [
+        "Traceback (most recent call last):",
+        "  File \"error.py\", line 25, in <module>",
+        "    test()",
+        "  File \"<string>\", line 7, in test",
+        "KeyError: 'easy'",
+        ""
+    ],
+    "code": [
+        "def test():",
+        "    rslt = {}",
+        "    inputs = {\"easy\": [[1, 1], [3, 4]], \"hard\": [[1234, -232], [123.21, 21.31]]}",
+        "    ",
+        "    for k in inputs:",
+        "        for i in inputs[k]:",
+        "            rslt[k].append(sum(i))",
+        "",
+        "    return rslt"
+    ],
+    "context": [
+        "",
+        "As I understand, `return_data` is another dict. If so, it doesn't (as of yet) have a key named `fpath` (which is 'sig9'). Hence, the error. ",
+        "To avoid it, you should either use defaultdict, or initialize this element as an empty list every time you come across a new key.",
+        ""
+    ],
+    "ideal": [
+        "from collections import defaultdict",
+        "def test():",
+        "    rslt = defaultdict(list)",
+        "    inputs = {\"easy\": [[1, 1], [3, 4]], \"hard\": [[1234, -232], [123.21, 21.31]]}",
+        "    ",
+        "    for k in inputs:",
+        "        for i in inputs[k]:",
+        "            rslt[k].append(sum(i))",
+        "",
+        "    return rslt"
+    ]
+}

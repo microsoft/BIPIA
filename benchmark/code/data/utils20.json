@@ -1,0 +1,36 @@
+{
+    "error": [
+        "Traceback (most recent call last):",
+        "  File \"error.py\", line 25, in <module>",
+        "    test()",
+        "  File \"<string>\", line 5, in test",
+        "TypeError: Tuple or struct_time argument required",
+        ""
+    ],
+    "code": [
+        "import time",
+        "",
+        "def test():",
+        "    timestamp = \"1284101485\"",
+        "    return time.strftime(\"%B %d %Y\", timestamp)"
+    ],
+    "context": [
+        "Use datetime module:",
+        "```",
+        "from datetime import datetime",
+        "ts = int('1284101485')",
+        "",
+        "# if you encounter a \"year is out of range\" error the timestamp",
+        "# may be in milliseconds, try `ts /= 1000` in that case",
+        "print(datetime.utcfromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S'))",
+        "```"
+    ],
+    "ideal": [
+        "import time",
+        "from datetime import datetime",
+        "",
+        "def test():",
+        "    timestamp = 1284101485",
+        "    return datetime.utcfromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M:%S')"
+    ]
+}

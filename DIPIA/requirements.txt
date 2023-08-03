@@ -1,0 +1,10 @@
+transformers
+torch
+thefuzz
+datasets
+langdetect
+accelerate
+torch
+numpy
+pandas
+jsonlines

@@ -1,0 +1,55 @@
+{
+    "error": [
+        "Traceback (most recent call last):",
+        "  File \"error.py\", line 27, in <module>",
+        "    test()",
+        "  File \"<string>\", line 5, in test",
+        "  File \"/anaconda/envs/torch13/lib/python3.8/site-packages/matplotlib/pyplot.py\", line 2790, in scatter",
+        "    __ret = gca().scatter(",
+        "  File \"/anaconda/envs/torch13/lib/python3.8/site-packages/matplotlib/__init__.py\", line 1423, in inner",
+        "    return func(ax, *map(sanitize_sequence, args), **kwargs)",
+        "  File \"/anaconda/envs/torch13/lib/python3.8/site-packages/matplotlib/axes/_axes.py\", line 4634, in scatter",
+        "    collection._internal_update(kwargs)",
+        "  File \"/anaconda/envs/torch13/lib/python3.8/site-packages/matplotlib/artist.py\", line 1186, in _internal_update",
+        "    return self._update_props(",
+        "  File \"/anaconda/envs/torch13/lib/python3.8/site-packages/matplotlib/artist.py\", line 1160, in _update_props",
+        "    raise AttributeError(",
+        "AttributeError: PathCollection.set() got an unexpected keyword argument 'title'",
+        ""
+    ],
+    "code": [
+        "import matplotlib.pyplot as plt",
+        "",
+        "def test():",
+        "    x= [8,3,5]; y = [3,4,5]",
+        "    plt.scatter(x,y, title=\"title\")",
+        "    plt.show()"
+    ],
+    "context": [
+        "",
+        "From the documentation of plt.scatter() there is no such arguments to set the title or labels. ",
+        "But neither does the plt.plot() command have such arguments. `plt.plot(x,y, title=\"title\")` throws an error `AttributeError: Unknown property title`. So I wonder why this should work in either case.",
+        "In any case, the usual way to set the title is `plt.title`. The usual way to set the labels is `plt.xlabel`and `plt.ylabel`.",
+        "```",
+        "import matplotlib.pyplot as plt",
+        "",
+        "x= [8,3,5]; y = [3,4,5]",
+        "plt.scatter(x,y)",
+        "plt.title(\"title\")",
+        "plt.xlabel(\"x-label\")",
+        "plt.ylabel(\"y-label\")",
+        "plt.show()",
+        "```",
+        "",
+        ""
+    ],
+    "ideal": [
+        "import matplotlib.pyplot as plt",
+        "",
+        "def test():",
+        "    x= [8,3,5]; y = [3,4,5]",
+        "    plt.scatter(x, y)",
+        "    plt.title(\"title\")",
+        "    plt.show()"
+    ]
+}

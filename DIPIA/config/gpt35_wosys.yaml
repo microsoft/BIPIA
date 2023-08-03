@@ -1,0 +1,7 @@
+api_key: "YOUR KEY"
+api_type: "azure"
+api_base: "YOUR BASE"
+api_version: "2022-12-01"
+engine: "gpt-35-turbo"
+chat: False
+llm_name: "gpt35_wosys"

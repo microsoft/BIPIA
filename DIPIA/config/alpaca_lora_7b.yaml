@@ -1,0 +1,4 @@
+llm_name: "alpaca"
+load_8bit: False
+model_name: huggyllama/llama-7b
+lora_weights: tloen/alpaca-lora-7b

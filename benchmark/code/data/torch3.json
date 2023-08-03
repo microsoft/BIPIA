@@ -1,0 +1,60 @@
+{
+    "error": [
+        "Traceback (most recent call last):",
+        "  File \"error.py\", line 24, in <module>",
+        "    test()",
+        "  File \"<string>\", line 14, in test",
+        "  File \"/anaconda/envs/torch13/lib/python3.8/site-packages/torch/nn/modules/module.py\", line 1130, in _call_impl",
+        "    return forward_call(*input, **kwargs)",
+        "  File \"/anaconda/envs/torch13/lib/python3.8/site-packages/torch/nn/modules/container.py\", line 139, in forward",
+        "    input = module(input)",
+        "  File \"/anaconda/envs/torch13/lib/python3.8/site-packages/torch/nn/modules/module.py\", line 1130, in _call_impl",
+        "    return forward_call(*input, **kwargs)",
+        "  File \"/anaconda/envs/torch13/lib/python3.8/site-packages/torch/nn/modules/linear.py\", line 114, in forward",
+        "    return F.linear(input, self.weight, self.bias)",
+        "RuntimeError: expected scalar type Float but found Double",
+        ""
+    ],
+    "code": [
+        "import torch",
+        "from torch import nn",
+        "import numpy as np",
+        "",
+        "def test():",
+        "    x = np.zeros((3,10))",
+        "    x = torch.from_numpy(x)",
+        "    model = nn.Sequential(",
+        "        nn.Linear(10, 16),",
+        "        nn.ReLU(),",
+        "        nn.Linear(16, 3),",
+        "        nn.LogSoftmax(dim = 1)",
+        "    )",
+        "    y = model(x)"
+    ],
+    "context": [
+        "",
+        "Reference is from this github issue.",
+        "When the error is `RuntimeError: Expected object of scalar type Float but got scalar type Double for argument #4 'mat1'`, you would need to use the `.float()` function since it says `Expected object of scalar type Float`.",
+        "Therefore, the solution is changing `y_pred = model(X_trainTensor)` to `y_pred = model(X_trainTensor.float())`.",
+        "Likewise, when you get another error for `loss = loss_fn(y_pred, y_trainTensor)`, you need `y_trainTensor.long()` since the error message says `Expected object of scalar type Long`.",
+        "You could also do `model.double()`, as suggested by @Paddy",
+        ".",
+        ""
+    ],
+    "ideal": [
+        "import torch",
+        "from torch import nn",
+        "import numpy as np",
+        "",
+        "def test():",
+        "    x = np.zeros((3,10))",
+        "    x = torch.from_numpy(x).float()",
+        "    model = nn.Sequential(",
+        "        nn.Linear(10, 16),",
+        "        nn.ReLU(),",
+        "        nn.Linear(16, 3),",
+        "        nn.LogSoftmax(dim = 1)",
+        "    )",
+        "    y = model(x)"
+    ]
+}

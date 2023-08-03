@@ -1,0 +1,3 @@
+load_8bit: False
+model_name: RWKV/rwkv-raven-14b
+llm_name: "rwkv"

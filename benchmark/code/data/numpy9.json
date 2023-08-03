@@ -1,0 +1,45 @@
+{
+    "error": [
+        "Traceback (most recent call last):",
+        "  File \"error.py\", line 26, in <module>",
+        "    test()",
+        "  File \"<string>\", line 7, in test",
+        "AttributeError: 'numpy.ndarray' object has no attribute 'append'",
+        ""
+    ],
+    "code": [
+        "import numpy as np",
+        "",
+        "def test():",
+        "    x = np.arange(100)",
+        "    train  = []",
+        "    for i in range(10):",
+        "        train.append(x[i:i+10])",
+        "        train = np.vstack(train)",
+        "    return train"
+    ],
+    "context": [
+        "",
+        "```",
+        "for col in range(loops):",
+        "    train.append(D[:,col:col+x_len+y_len])",
+        "    train = np.vstack(train)",
+        "    X_train, Y_train = np.split(train, [x_len], axis = 1)",
+        "```",
+        "",
+        "the error is in the code above.",
+        "After `train = np.vstack(train)`, `train` becomes a numpy array, not a list, so in the next iteration you are going to append a value on a numpy array which doesn't have an `append` method, hence the error.",
+        ""
+    ],
+    "ideal": [
+        "import numpy as np",
+        "",
+        "def test():",
+        "    x = np.arange(100)",
+        "    train  = []",
+        "    for i in range(10):",
+        "        train.append(x[i:i+10])",
+        "    train = np.vstack(train)",
+        "    return train"
+    ]
+}

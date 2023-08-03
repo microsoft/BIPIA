@@ -1,0 +1,58 @@
+{
+    "error": [
+        "Traceback (most recent call last):",
+        "  File \"error.py\", line 29, in <module>",
+        "    test()",
+        "  File \"<string>\", line 10, in test",
+        "  File \"/anaconda/envs/torch13/lib/python3.8/site-packages/sklearn/neighbors/_classification.py\", line 215, in fit",
+        "    return self._fit(X, y)",
+        "  File \"/anaconda/envs/torch13/lib/python3.8/site-packages/sklearn/neighbors/_base.py\", line 476, in _fit",
+        "    check_classification_targets(y)",
+        "  File \"/anaconda/envs/torch13/lib/python3.8/site-packages/sklearn/utils/multiclass.py\", line 207, in check_classification_targets",
+        "    raise ValueError(\"Unknown label type: %r\" % y_type)",
+        "ValueError: Unknown label type: 'continuous'",
+        ""
+    ],
+    "code": [
+        "import numpy as np",
+        "from sklearn.neighbors import KNeighborsClassifier ",
+        "",
+        "def test():",
+        "   ",
+        "    X_train = np.random.randn(10, 20)",
+        "    y_train = np.random.randn(10)",
+        "",
+        "    knn = KNeighborsClassifier(n_neighbors=1)",
+        "    knn.fit(X_train,y_train)"
+    ],
+    "context": [
+        "",
+        "The values in `Yearly Amount Spent` column are real numbers, so they cannot serve as labels for a classification problem (see here):",
+        "> ",
+        "> When doing classification in scikit-learn, y is a vector of integers",
+        "  or strings.> ",
+        "",
+        "Hence you get the error. If you want to build a classification model, you need to decide how you transform them into a finite set of labels. ",
+        "Note that if you just want to avoid the error, you could do",
+        "```",
+        "import numpy as np",
+        "y = np.asarray(df['Yearly Amount Spent'], dtype=\"|S6\")",
+        "```",
+        "",
+        "This will transform the values in `y` into strings of the required format. Yet, every label will appear in only one sample, so you cannot really build a meaningful model with such set of labels.",
+        ""
+    ],
+    "ideal": [
+        "import numpy as np",
+        "from sklearn.neighbors import KNeighborsClassifier ",
+        "",
+        "def test():",
+        "   ",
+        "    X_train = np.random.randn(10, 20)",
+        "    y_train = np.random.randn(10)",
+        "    y_train = np.asarray(y_train, dtype=\"|S6\")",
+        "",
+        "    knn = KNeighborsClassifier(n_neighbors=1)",
+        "    knn.fit(X_train,y_train)"
+    ]
+}

@@ -1,0 +1,7 @@
+api_key: "YOUR KEY"
+api_type: "azure"
+api_base: "YOUR BASE"
+api_version: "2023-03-15-preview"
+engine: "gpt-4"
+chat: True
+llm_name: "gpt4_wosys"

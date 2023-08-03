@@ -1,0 +1,52 @@
+{
+    "error": [
+        "Traceback (most recent call last):",
+        "  File \"error.py\", line 27, in <module>",
+        "    exec(\"\\n\".join(data[\"code\"]))",
+        "  File \"<string>\", line 11",
+        "SyntaxError: cannot assign to operator",
+        ""
+    ],
+    "code": [
+        "from sklearn.preprocessing import LabelEncoder",
+        "from sklearn import datasets",
+        "",
+        "",
+        "def test():",
+        "    iris = datasets.load_iris()",
+        "    X = iris.data",
+        "    y = iris.target",
+        "",
+        "    label_encoder = LabelEncoder()",
+        "    target-label = label_encoder.fit_transform(y)"
+    ],
+    "context": [
+        "",
+        "This is not an issue related to assigning value to a variable. This is a `Syntax Error`. You haven't followed the proper naming convention to name the variable `play-label`.",
+        "If you try doing something like this :",
+        "```",
+        ">>> a-b = 3",
+        "  File \"<stdin>\", line 1",
+        "SyntaxError: can't assign to operator",
+        "```",
+        "",
+        "You'll get the same error.",
+        "Replace dash `-` with Underscore `_` and it will work fine.",
+        "The correct variable name should be `play_label`.",
+        "Refer to this link, for an indepth description . Python Naming Convention",
+        ""
+    ],
+    "ideal": [
+        "from sklearn.preprocessing import LabelEncoder",
+        "from sklearn import datasets",
+        "",
+        "",
+        "def test():",
+        "    iris = datasets.load_iris()",
+        "    X = iris.data",
+        "    y = iris.target",
+        "",
+        "    label_encoder = LabelEncoder()",
+        "    target_label = label_encoder.fit_transform(y)"
+    ]
+}

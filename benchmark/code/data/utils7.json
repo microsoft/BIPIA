@@ -1,0 +1,44 @@
+{
+    "error": [
+        "Traceback (most recent call last):",
+        "  File \"error.py\", line 25, in <module>",
+        "    test()",
+        "  File \"<string>\", line 7, in test",
+        "ValueError: math domain error",
+        ""
+    ],
+    "code": [
+        "import numpy as np",
+        "import math",
+        "def test():",
+        "    a = (np.arange(10) - 1).tolist()",
+        "    rslt = []",
+        "    for i in a:",
+        "        rslt.append(math.log(i))",
+        "",
+        "    return rslt"
+    ],
+    "context": [
+        "",
+        "Your code is doing a `log` of a number that is less than or equal to zero. That's mathematically undefined, so Python's `log` function raises an exception. Here's an example:",
+        "```",
+        ">>> from math import log",
+        ">>> log(-1)",
+        "Traceback (most recent call last):",
+        "  File \"<pyshell#59>\", line 1, in <module>",
+        "    log(-1)",
+        "ValueError: math domain error",
+        "```",
+        "",
+        "Without knowing what your `newtonRaphson2` function does, I'm not sure I can guess where the invalid `x[2]` value is coming from, but hopefully this will lead you on the right track.",
+        ""
+    ],
+    "ideal": [
+        "import numpy as np",
+        "import math",
+        "def test():",
+        "    a = np.arange(10) - 1",
+        "    rslt = np.log(a)",
+        "    return rslt"
+    ]
+}

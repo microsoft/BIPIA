@@ -1,0 +1,37 @@
+{
+    "error": [
+        "Traceback (most recent call last):",
+        "  File \"error.py\", line 25, in <module>",
+        "    test()",
+        "  File \"<string>\", line 4, in test",
+        "AttributeError: 'generator' object has no attribute 'sort'",
+        ""
+    ],
+    "code": [
+        "from pathlib import Path",
+        "",
+        "def test():",
+        "    return Path(\".\").iterdir().sort()"
+    ],
+    "context": [
+        "",
+        "As the error indicates, generators do not have a `sort` method. You can instead exhaust a generator via built-in sorted, which accepts an iterable as an input. Here's a trivial example:",
+        "```",
+        "def randoms(n):",
+        "    import random",
+        "    for _ in range(n):",
+        "        yield random.randint(0, 10)",
+        "",
+        "res = sorted(randoms(10))  # [1, 2, 4, 5, 6, 6, 6, 7, 8, 10]",
+        "res = randoms(10).sort()   # AttributeError: 'generator' object has no attribute 'sort'",
+        "```",
+        "",
+        ""
+    ],
+    "ideal": [
+        "from pathlib import Path",
+        "",
+        "def test():",
+        "    return sorted(Path(\".\").iterdir())"
+    ]
+}

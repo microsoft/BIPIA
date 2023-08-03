@@ -1,0 +1,54 @@
+{
+    "error": [
+        "Traceback (most recent call last):",
+        "  File \"error.py\", line 29, in <module>",
+        "    test()",
+        "  File \"<string>\", line 5, in test",
+        "  File \"/anaconda/envs/torch13/lib/python3.10/site-packages/pandas/core/frame.py\", line 1764, in from_dict",
+        "    return cls(data, index=index, columns=columns, dtype=dtype)",
+        "  File \"/anaconda/envs/torch13/lib/python3.10/site-packages/pandas/core/frame.py\", line 664, in __init__",
+        "    mgr = dict_to_mgr(data, index, columns, dtype=dtype, copy=copy, typ=manager)",
+        "  File \"/anaconda/envs/torch13/lib/python3.10/site-packages/pandas/core/internals/construction.py\", line 493, in dict_to_mgr",
+        "    return arrays_to_mgr(arrays, columns, index, dtype=dtype, typ=typ, consolidate=copy)",
+        "  File \"/anaconda/envs/torch13/lib/python3.10/site-packages/pandas/core/internals/construction.py\", line 118, in arrays_to_mgr",
+        "    index = _extract_index(arrays)",
+        "  File \"/anaconda/envs/torch13/lib/python3.10/site-packages/pandas/core/internals/construction.py\", line 656, in _extract_index",
+        "    raise ValueError(\"If using all scalar values, you must pass an index\")",
+        "ValueError: If using all scalar values, you must pass an index",
+        ""
+    ],
+    "code": [
+        "import pandas as pd",
+        "",
+        "def test():",
+        "    data = {\"a\": 1, \"b\": 4}",
+        "    df = pd.DataFrame.from_dict(data)"
+    ],
+    "context": [
+        "",
+        "The error message says that if you're passing scalar values, you have to pass an index.  So you can either not use scalar values for the columns -- e.g. use a list:",
+        "```",
+        ">>> df = pd.DataFrame({'A': [a], 'B': [b]})",
+        ">>> df",
+        "   A  B",
+        "0  2  3",
+        "```",
+        "",
+        "or use scalar values and pass an index:",
+        "```",
+        ">>> df = pd.DataFrame({'A': a, 'B': b}, index=[0])",
+        ">>> df",
+        "   A  B",
+        "0  2  3",
+        "```",
+        "",
+        ""
+    ],
+    "ideal": [
+        "import pandas as pd",
+        "",
+        "def test():",
+        "    data = {\"a\": [1], \"b\": [4]}",
+        "    df = pd.DataFrame.from_dict(data)"
+    ]
+}

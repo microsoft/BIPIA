@@ -1,0 +1,53 @@
+{
+    "error": [
+        "Traceback (most recent call last):",
+        "  File \"error.py\", line 23, in <module>",
+        "    exec(\"\\n\".join(data[\"code\"]))",
+        "  File \"<string>\", line 1, in <module>",
+        "  File \"<string>\", line 3, in MyCLS",
+        "  File \"<string>\", line 3, in <lambda>",
+        "NameError: name 'mul_list' is not defined",
+        ""
+    ],
+    "code": [
+        "class MyCLS:",
+        "    mul_list = [1, 11, 32]",
+        "    precmp_list = list(map(lambda x: {k: x * k for k in mul_list}, range(100)))",
+        "",
+        "my_cls = MyCLS()"
+    ],
+    "context": [
+        "",
+        "You probably want to put some of this code into a constructor. As written, it's all defined as part of the class, which is causing your problem: `count_mon` isn't in scope when the `lambda` function is called.",
+        "Move this code inside an `__init__` function:",
+        "```",
+        "class Week(): ",
+        "    def __init__(self):",
+        "        blank_mon=[0]*24",
+        "        sum_mon=blank_mon",
+        "        count_mon=0",
+        "",
+        "        print (\"Blank Monday: \",blank_mon)",
+        "        #curr_mon=[1,0,2,0,3,0,4,0,5,0,3,0,3,0,2,0,1,0,2,0,1,0,1,0]",
+        "        curr_mon=[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]",
+        "        print (\"Current Monday\",curr_mon)",
+        "        count_mon = count_mon + 1",
+        "        print (\"Monday Count:\",count_mon)",
+        "        sum_mon=list(map(add,sum_mon,curr_mon))                   #Adds all the Mondays together for each hour",
+        "        print (\"Total sum of all Mondays::\",sum_mon)",
+        "        avg_mon = list(map(lambda w_mon: float(w_mon)/count_mon,sum_mon))   #Gets the average of the Mondays for each hour",
+        "        print (\"Average Monday::\",avg_mon)",
+        "```",
+        "",
+        "Here's the full explanation for why this happens: Accessing class variables from a list comprehension in the class definition",
+        ""
+    ],
+    "ideal": [
+        "class MyCLS:",
+        "    def __init__(self):",
+        "        self.mul_list = [1, 11, 32]",
+        "        self.precmp_list = list(map(lambda x: {k: x * k for k in self.mul_list}, range(100)))",
+        "",
+        "my_cls = MyCLS()"
+    ]
+}
