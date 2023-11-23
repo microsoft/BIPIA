@@ -1,0 +1,5 @@
+api_key: "[YOUR API KEY]"
+api_type: "openai"
+model: "[MODEL]"
+chat: True
+llm_name: "gpt35_wosys"

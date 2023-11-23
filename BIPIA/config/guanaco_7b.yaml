@@ -1,4 +1,0 @@
-llm_name: "guanaco"
-load_8bit: False
-model_name: huggyllama/llama-7b
-lora_weights: timdettmers/guanaco-7b

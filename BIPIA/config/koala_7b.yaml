@@ -1,3 +1,0 @@
-load_8bit: False
-model_name: TheBloke/koala-7B-HF
-llm_name: "koala"

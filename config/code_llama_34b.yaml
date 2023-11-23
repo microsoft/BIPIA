@@ -1,0 +1,3 @@
+load_8bit: False
+model_name: codellama/CodeLlama-34b-Instruct-hf
+llm_name: "llama2"

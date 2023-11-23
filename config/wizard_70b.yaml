@@ -1,0 +1,4 @@
+load_8bit: False
+model_name: huggyllama/llama-13b
+delta_weights: WizardLM/WizardLM-70B-V1.0
+llm_name: "wizard"

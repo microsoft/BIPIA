@@ -1,3 +1,0 @@
-load_8bit: False
-model_name: stabilityai/stablelm-tuned-alpha-7b
-llm_name: "stablelm"

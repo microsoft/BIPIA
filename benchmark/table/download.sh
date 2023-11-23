@@ -1,2 +1,0 @@
-wget https://github.com/ppasupat/WikiTableQuestions/releases/download/v1.0.2/WikiTableQuestions-1.0.2-compact.zip -o ../../raw/WikiTableQuestions-1.0.2-compact.zip
-unzip ../../raw/WikiTableQuestions-1.0.2-compact.zip

@@ -1,3 +1,0 @@
-load_8bit: False
-model_name: mosaicml/mpt-7b-chat
-llm_name: "mpt"

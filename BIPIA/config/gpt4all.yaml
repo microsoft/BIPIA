@@ -1,3 +1,0 @@
-load_8bit: False
-model_name: nomic-ai/gpt4all-13b-snoozy
-llm_name: "gpt4all"

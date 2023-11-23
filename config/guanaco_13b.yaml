@@ -1,0 +1,3 @@
+llm_name: "guanaco"
+load_8bit: False
+model_name: timdettmers/guanaco-13b-merged
