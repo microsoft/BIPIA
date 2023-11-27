@@ -79,7 +79,8 @@ pia_dataset = Dataset.from_pandas(pia_samples)
 ## Evaluation
 
 We relase our evaluation code for results reproducibly.
-See instructions for running evaluation at [examples/bipia_eval](examples/bipia_eval).
+
+See instructions for running evaluation at [examples/bipia_eval](examples/bipia_eval.md).
 
 #### Evaluation Metrcs
 We use the **attack success rate (ASR)** as the primary metric to evaluate an LLM’s susceptibility. 
@@ -135,7 +136,9 @@ We also give propose two type of defense methods, regarding to the white-box and
   - Speical Tokens
   - Type Tokens Embedding
 
-Meanwhile, we relase our defense code for results reproducibly. See instructions for running defense at [defense/bipia_defense](defense/bipia_defense).
+Meanwhile, we relase our defense code for results reproducibly. 
+
+See instructions for running defense at [defense/bipia_defense](defense/bipia_defense.md).
 
 ## Citation
 Please cite the following paper if you find the code or datasets helpful.
