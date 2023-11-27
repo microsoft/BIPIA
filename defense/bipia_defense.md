@@ -335,9 +335,9 @@ We take **vicuna-7b** as an example.
 
 #### Type embeddings
 ##### ASR
-![finetune-type-embs-asr.png](../figure/fintune-type-embs-asr.png)
+![finetune-type-embs-asr.png](../figure/finetune-type-embs-asr.png)
 ##### MT-bench Score
-![finetune-type-embs-mt.png](../figure/fintune-type-embs-mt.png)
+![finetune-type-embs-mt.png](../figure/finetune-type-embs-mt.png)
 
 More experimental details and results can be found in our paper.
 

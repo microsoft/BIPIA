@@ -70,8 +70,8 @@ python run.py \
   --seed {SEED} \
   --mode inference \
   --dataset_name {TASK} \
-  --context_data_file ../../bipia/{TASK}/test.jsonl \
-  --attack_data_file ../../bipia/{ATTACK_TYPE}_attack_test.json \
+  --context_data_file ../bipia/{TASK}/test.jsonl \
+  --attack_data_file ../bipia/{ATTACK_TYPE}_attack_test.json \
   --gpt_config_file ../config/{GPT_MODEL}.yaml \
   --llm_config_file ../config/{MODEL}.yaml \
   --output_path {OUPTPUT_PATH} \
