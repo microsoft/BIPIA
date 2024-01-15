@@ -19,7 +19,7 @@ from accelerate.utils import set_seed
 
 from bipia.model import AutoLLM
 from bipia.data import AutoPIABuilder, DefaultDataCollator, DataCollatorWithPadding
-from bipia.metrics import DipiaEvalFactory
+from bipia.metricslog_steps import DipiaEvalFactory
 
 from parameters import parse_args
 
