@@ -1,4 +1,5 @@
-# Benchmarking and Defending Against Indirect Prompt Injection Attacks on Large Language Models.
+# BIPIA
+The data and code of our work "Benchmarking and Defending Against Indirect Prompt Injection Attacks on Large Language Models".
 
 Recent remarkable advancements in large language models (LLMs) have led to their widespread adoption in various applications. A key feature of these applications is the combination of LLMs with external content, where user instructions and third-party content are combined to create prompts for LLM processing. These applications, however, are vulnerable to indirect prompt injection attacks, where malicious instructions embedded within external content compromise LLM's output, causing their responses to deviate from user expectations. Despite the discovery of this security issue, no comprehensive analysis of indirect prompt injection attacks on different LLMs is available due to the lack of a benchmark. Furthermore, no effective defense has been proposed.
 
