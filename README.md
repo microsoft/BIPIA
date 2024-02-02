@@ -1,6 +1,9 @@
 # BIPIA
 The data and code of our work "Benchmarking and Defending Against Indirect Prompt Injection Attacks on Large Language Models".
+If you believe that the content on this repo infringes your rights, please contact us for requesting a take down.
 
+
+## Overview
 Recent remarkable advancements in large language models (LLMs) have led to their widespread adoption in various applications. A key feature of these applications is the combination of LLMs with external content, where user instructions and third-party content are combined to create prompts for LLM processing. These applications, however, are vulnerable to indirect prompt injection attacks, where malicious instructions embedded within external content compromise LLM's output, causing their responses to deviate from user expectations. Despite the discovery of this security issue, no comprehensive analysis of indirect prompt injection attacks on different LLMs is available due to the lack of a benchmark. Furthermore, no effective defense has been proposed.
 
 In this work, we introduce the first **b**enchmark of **i**ndirect **p**rompt **i**njection **a**ttack, BIPIA, to measure the robustness of various LLMs and defenses against indirect prompt injection attacks. Our experiments reveal that LLMs with greater capabilities exhibit more vulnerable to indirect prompt injection attacks for text tasks, resulting in a higher ASR. We hypothesize that indirect prompt injection attacks are mainly due to the LLMs' inability to distinguish between instructions and external content. Based on this conjecture, we propose four black-box methods based on prompt learning and a white-box defense methods based on fine-tuning with adversarial training to enable LLMs to distinguish between instructions and external content and ignore instructions in the external content. Our experimental results show that our black-box defense methods can effectively reduce ASR but cannot completely thwart indirect prompt injection attacks, while our white-box defense method can reduce ASR to nearly zero with little adverse impact on the LLM's performance on general tasks. We hope that our benchmark and defenses can inspire future work in this important area.
@@ -38,8 +41,9 @@ This code should only be used for research on indirect prompt injection attacks.
 
 ### Project data 
 
-This project builds a dataset based on data from [OpenAI Evals](https://github.com/openai/evals), [NewsQA](https://arxiv.org/abs/1611.09830), [WikiTableQuestions](https://arxiv.org/abs/1508.00305), [XSum](https://arxiv.org/abs/1808.08745v1), [Stack Exchange](https://archive.org/details/stackexchange).
-For more information see `Download the dataset` from the `How to use` section bellow.
+This project includes a dataset with five tasks: Web QA, Email QA, Table QA, Summarization, and Code QA. The data for Email QA comes from [OpenAI Evals](https://github.com/openai/evals), for Table QA from [WikiTableQuestions](https://arxiv.org/abs/1508.00305), and for Code QA from [Stack Exchange](https://archive.org/details/stackexchange).
+The datasets for Web QA and Summarization, due to license reasons, require users to read the usage terms of the source data and download it from the source, then process the data using the scripts we provide. 
+For more information, see `Download the dataset` in the `How to use` section below.
 
 
 ### Fairness and Responsible AI testing
@@ -62,7 +66,7 @@ provided by the bot. You will only need to do this once across all repos using o
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
-contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.g
+contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
 
 ## Requirements
@@ -79,26 +83,35 @@ pip install -r requirements.txt
 In our work, we realse the first **b**enchmark of **i**ndirect **p**rompt **i**njection attack, named BIPIA.
 There are two methods to load the dataset.
 
-
 - Load dataset with huggingface:
 ```python
 from datasets import load_dataset
 
-dataset = load_dataset("bipia", "email")
+dataset = load_dataset("bipia", dataset_name)
 ```
 
 - Load dataset with python
 ```Python
 from bipia import AutoPIABuilder
 
-pia_builder = AutoPIABuilder.from_name(dataset_name)(seed)
+pia_builder = AutoPIABuilder.from_name(dataset_name)(seed=2023)
 pia_samples = pia_builder(
     context_data_file,
     attack_data_file,
-    enable_stealth=enable_stealth,
+    enable_stealth=False,
 )
 pia_dataset = Dataset.from_pandas(pia_samples)
 ```
+
+For different task of different split (train/test), set `context_data_fileset` as the files in `benchmark/{task}/{train|test}.jsonl` directory.  set `attack_data_file` as `benchmark/{code|text}_attack_{train|test}.json`. The configureation of `dataset_name` is as follows:
+- EmailQA: set `dataset_name` as `email`
+- WebQA: set `dataset_name` as `qa`
+- Summarization: set `dataset_name` as `abstract`
+- TableQA: set `dataset_name` as `table`
+- CodeQA: set `dataset_name` as `code`
+
+*Note: For Summarization and WebQA task, due to license issues, please follow the guidelines in [benchmark/README.md](benchmark/README.md) to generate `context_data_fileset`.*
+
 
 
 ### Evaluation

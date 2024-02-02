@@ -1,18 +1,4 @@
-# Adopted from tatsu-lab@stanford_alpaca. Below is the original copyright:
-#    Copyright 2023 Rohan Taori, Ishaan Gulrajani, Tianyi Zhang, Yann Dubois, Xuechen Li
-#
-#    Licensed under the Apache License, Version 2.0 (the "License");
-#    you may not use this file except in compliance with the License.
-#    You may obtain a copy of the License at
-#
-#        http://www.apache.org/licenses/LICENSE-2.0
-#
-#    Unless required by applicable law or agreed to in writing, software
-#    distributed under the License is distributed on an "AS IS" BASIS,
-#    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#    See the License for the specific language governing permissions and
-#    limitations under the License.
-from typing import List, Dict, Optional, Sequence
+from typing import List, Dict, Optional
 from dataclasses import dataclass, field
 import jsonlines
 import wandb
@@ -21,9 +7,6 @@ import pathlib
 from copy import deepcopy
 
 import os
-import numpy as np
-import torch
-from torch.utils.data import Dataset, DataLoader
 
 import datasets
 from datasets import concatenate_datasets
@@ -41,96 +24,6 @@ IGNORE_TOKEN_ID = LabelSmoother.ignore_index
 
 
 @dataclass
-class Conversation:
-    """A class that manages prompt templates and keeps all conversation history."""
-
-    # The name of this template
-    name: str
-    # The system prompt
-    system: str
-    # Two roles
-    roles: List[str]
-    # All messages. Each item is (role, message).
-    messages: List[List[str]]
-    # The number of few shot examples
-    offset: int
-    sep: str
-    sep2: str = None
-    # Stop criteria (the default one is EOS token)
-    stop_str: str = None
-    # Stops generation if meeting any token in this list
-    stop_token_ids: List[int] = None
-
-    def get_prompt(self) -> str:
-        """Get the prompt for generation."""
-        seps = [self.sep, self.sep2]
-        ret = self.system + seps[0]
-        for i, (role, message) in enumerate(self.messages):
-            if message:
-                ret += role + ": " + message + seps[i % 2]
-            else:
-                ret += role + ":"
-        return ret
-
-    def append_message(self, role: str, message: str):
-        """Append a new message."""
-        self.messages.append([role, message])
-
-    def update_last_message(self, message: str):
-        """Update the last output.
-
-        The last message is typically set to be None when constructing the prompt,
-        so we need to update it in-place after getting the response from a model.
-        """
-        self.messages[-1][1] = message
-
-    def to_gradio_chatbot(self):
-        """Convert the conversation to gradio chatbot format."""
-        ret = []
-        for i, (role, msg) in enumerate(self.messages[self.offset :]):
-            if i % 2 == 0:
-                ret.append([msg, None])
-            else:
-                ret[-1][-1] = msg
-        return ret
-
-    def to_openai_api_messages(self):
-        """Convert the conversation to OpenAI chat completion format."""
-        ret = [{"role": "system", "content": self.system}]
-
-        for i, (_, msg) in enumerate(self.messages[self.offset :]):
-            if i % 2 == 0:
-                ret.append({"role": "user", "content": msg})
-            else:
-                if msg is not None:
-                    ret.append({"role": "assistant", "content": msg})
-        return ret
-
-    def copy(self):
-        return Conversation(
-            name=self.name,
-            system=self.system,
-            roles=self.roles,
-            messages=[[x, y] for x, y in self.messages],
-            offset=self.offset,
-            sep_style=self.sep_style,
-            sep=self.sep,
-            sep2=self.sep2,
-            stop_str=self.stop_str,
-            stop_token_ids=self.stop_token_ids,
-        )
-
-    def dict(self):
-        return {
-            "template_name": self.name,
-            "system": self.system,
-            "roles": self.roles,
-            "messages": self.messages,
-            "offset": self.offset,
-        }
-
-
-@dataclass
 class ModelArguments:
     llm_config_file: Optional[str] = field(
         default=None,
@@ -140,8 +33,6 @@ class ModelArguments:
         default=None,
         metadata={"help": "the config file for the LLM used for SFT."},
     )
-    # model_name_or_path: Optional[str] = field(default="lmsys/vicuna-13b-v1.3")
-
 
 @dataclass
 class DataArguments:

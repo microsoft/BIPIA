@@ -19,3 +19,21 @@
     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE
+
+    NOTE: This license applies to all parts of this repository except for the datasets specified below. See the respective datasets for their individual licenses.
+    
+    Dataset Licenses:
+    * Location: benchmark
+    * Components:
+        * WikiTableQuestions
+            * License: Creative Commons Attribution-ShareAlike 4.0 International License: https://github.com/ppasupat/WikiTableQuestions/blob/master/LICENSE
+            * Source: https://github.com/ppasupat/WikiTableQuestions
+        * Stack Exchange
+            * License: Creative Commons Attribution-ShareAlike 4.0 International License: https://creativecommons.org/licenses/by-sa/4.0/
+            * Source: https://archive.org/details/stackexchange
+            * We use answers to 100 questions from Stack Overflow in our dataset. The URLs of the questions and information about the corresponding authors are included in the dataset. For details, see [benchmark/code/train.jsonl](benchmark/code/train.jsonl) and [benchmark/code/test.jsonl](benchmark/code/test.jsonl).
+        * Invoices data in Openai Evals
+            * License: MIT License: https://github.com/openai/evals/blob/main/LICENSE.md
+            * Source: https://github.com/openai/evals/blob/main/evals/registry/data/invoices/match.jsonl
+
+    Please note: While efforts have been made to accurately represent the licenses associated with each dataset, users should consult the original source of the dataset to ensure compliance with any licensing terms and conditions.
