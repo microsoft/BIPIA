@@ -83,26 +83,35 @@ pip install -r requirements.txt
 In our work, we realse the first **b**enchmark of **i**ndirect **p**rompt **i**njection attack, named BIPIA.
 There are two methods to load the dataset.
 
-
 - Load dataset with huggingface:
 ```python
 from datasets import load_dataset
 
-dataset = load_dataset("bipia", "email")
+dataset = load_dataset("bipia", dataset_name)
 ```
 
 - Load dataset with python
 ```Python
 from bipia import AutoPIABuilder
 
-pia_builder = AutoPIABuilder.from_name(dataset_name)(seed)
+pia_builder = AutoPIABuilder.from_name(dataset_name)(seed=2023)
 pia_samples = pia_builder(
     context_data_file,
     attack_data_file,
-    enable_stealth=enable_stealth,
+    enable_stealth=False,
 )
 pia_dataset = Dataset.from_pandas(pia_samples)
 ```
+
+For different task of different split (train/test), set `context_data_fileset` as the files in `benchmark/{task}/{train|test}.jsonl` directory.  set `attack_data_file` as `benchmark/{code|text}_attack_{train|test}.json`. The configureation of `dataset_name` is as follows:
+- EmailQA: set `dataset_name` as `email`
+- WebQA: set `dataset_name` as `qa`
+- Summarization: set `dataset_name` as `abstract`
+- TableQA: set `dataset_name` as `table`
+- CodeQA: set `dataset_name` as `code`
+
+*Note: For Summarization and WebQA task, due to license issues, please follow the guidelines in [benchmark/README.md](benchmark/README.md) to generate `context_data_fileset`.*
+
 
 
 ### Evaluation
