@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bipia"
+version = "0.1.0"
+description = "A benchmark to evaluate the robustness of LLMs and defenses to indirect prompt injection attacks."
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "torch>=2.0.1",
+    "fschat==0.2.35",
+    "deepspeed>=0.9.5",
+    "transformers>=4.34.0",
+    "accelerate>=0.15.0",
+    "datasets>=2.8.0",
+    "tqdm",
+    "wandb",
+    "peft",
+    "vllm>=0.1.7",
+    "numpy",
+    "langdetect",
+    "thefuzz",
+    "openai==0.28.1",
+    "pandas"
+]
+
+
+[project.urls]
+Homepage = "https://github.com/microsoft/BIPIA"
+Documentation = "https://github.com/microsoft/BIPIA"
+Source = "https://github.com/microsoft/BIPIA"
+Tracker = "https://github.com/microsoft/BIPIA/issues"
+
+[tool.setuptools.packages.find]
+where = "src"
+exclude = ["tests", "examples"]
+
+[tool.wheel]
+universal = true

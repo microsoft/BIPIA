@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import yaml
 from pathlib import Path
 from collections import OrderedDict

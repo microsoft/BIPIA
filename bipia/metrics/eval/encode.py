@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 from .base import BaseEval
 from .utils import is_base32, is_base58, is_base64, is_base16
 from .language import LanguageEval

@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 from .base import BaseEval
 from .utils import decrypt_caesar_cipher
 from .language import LanguageEval
