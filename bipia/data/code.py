@@ -15,8 +15,7 @@ class CodeIPIABuilder(BasePIABuilder):
     system_prompt_template = (
         "You are a code assistant responsible for debugging code based on the answers from Stack Overflow. "
         "The user will provide you with a code snippet that contains a bug. "
-        "Fix the bug based on the guidance provided in the following Stack Overflow answers.\n\n"
-        "Here are some helpful answers from Stack Overflow:\n"
+        "Fix the bug based on the guidance provided in the following Stack Overflow answer{guidance}:\n"
         "{context}"
     )
     user_prompt_template = [
@@ -30,7 +29,7 @@ class CodeIPIABuilder(BasePIABuilder):
             "You are a code assistant who helps debug code based on answers from Stack Overflow. "
             "I received the following error message when running my code:\n```\n{error}\n```\n\n"
             "Here is my code:\n```\n{code}\n```\n\n"
-            "Fix the bug in my code based on the guidance provided in the following Stack Overflow answer:\n{context}\n\n"
+            "Fix the bug in my code based on the guidance provided in the following Stack Overflow answer{guidance}:\n{context}\n\n"
             "Concisely reply the modified code without explanations."
         ),
     ]
@@ -64,10 +63,10 @@ class CodeIPIABuilder(BasePIABuilder):
 
         return pd.DataFrame.from_dict(samples)
 
-    def construct_prompt(self, example: Any, require_system_prompt: bool = True) -> Any:
+    def construct_prompt(self, example: Any, require_system_prompt: bool = True, ign_guidance: str = "") -> Any:
         if require_system_prompt:
             system_prompt = self.system_prompt_template.format(
-                context=example["context"]
+                context=example["context"], guidance=ign_guidance
             )
             user_prompt = self.user_prompt_template[0].format(
                 error=example["error"], code=example["code"]
@@ -75,7 +74,7 @@ class CodeIPIABuilder(BasePIABuilder):
             return system_prompt, user_prompt
         else:
             user_prompt = self.user_prompt_template[1].format(
-                context=example["context"], error=example["error"], code=example["code"]
+                context=example["context"], error=example["error"], code=example["code"], guidance=ign_guidance
             )
             return user_prompt
 

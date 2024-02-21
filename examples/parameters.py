@@ -93,6 +93,11 @@ def parse_args():
         action="store_true",
         help="Whether to enable stealth to encode attack instructions with base64.",
     )
+    parser.add_argument(
+        "--add_ign_guidance",
+        action="store_true",
+        help="Whether to add ignore guidance in prompt to instruct LLM not to follow the malicious instructions in the external content.",
+    )
 
     args = parser.parse_args()
 

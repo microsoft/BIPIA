@@ -26,6 +26,13 @@ def insert_middle(context: str, attack: str, random_state: int = None):
 
     return "\n".join([context[:start], attack, context[start:]])
 
+def remove_none_name(messages):
+    if isinstance(messages, list):
+        for message in messages:
+            if "name" in message and message["name"] is None:
+                del message["name"]
+    return messages
+
 
 class DefaultDataCollator:
     def __call__(self, batch_examples: List) -> Dict:
@@ -33,6 +40,8 @@ class DefaultDataCollator:
 
         for example in batch_examples:
             for key in example:
+                if key == "message":
+                    example[key] = remove_none_name(example[key])
                 batch_rslt[key].append(example[key])
 
         return batch_rslt

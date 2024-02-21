@@ -1,3 +1,6 @@
+# Copyright (c) Microsoft Corporation.
+# Licensed under the MIT License.
+
 import argparse
 
 from typing import List
@@ -12,8 +15,6 @@ from collections import Counter
 import torch
 from torch.utils.data import DataLoader
 
-import transformers
-from transformers import AutoModelForCausalLM
 
 import datasets
 from datasets import Dataset
@@ -24,13 +25,14 @@ from accelerate.utils import set_seed
 
 from bipia.model import Vicuna
 from bipia.data import AutoPIABuilder, DefaultDataCollator
+from bipia.data.utils import no_insert
 
 from utils import (
     DATA_INFO,
     TEST_ATTACK_INFO as ATTACK_INFO,
+    IGN_GUIDANCES,
     DataCollatorWithPaddingAndLabel,
 )
-from type_emb_model import LlamaModelWTypeEmbedCausalLM
 
 logger = get_logger(__name__)
 
@@ -99,16 +101,29 @@ def parse_args():
         action="store_true",
         help="Whether to resume from previous stored file. If the file does not exist test from scracth.",
     )
-
     parser.add_argument(
-        "--add_context_type_embedding",
-        action="store_true",
-        help="Whether to add type embeddings.",
+        "--tensor_parallel_size",
+        type=int,
+        default=1,
+        help="The tensor parallel size for vllm models",
     )
+
     parser.add_argument(
         "--add_special_context_token",
         action="store_true",
         help="Whether to add spetial tokens.",
+    )
+
+    parser.add_argument(
+        "--add_ign_guidance",
+        action="store_true",
+        help="Whether to add ignore guidance in prompt to instruct LLM not to follow the malicious instructions in the external content.",
+    )
+
+    parser.add_argument(
+        "--use_clean",
+        action="store_true",
+        help="Whether to use clean data for evaluation.",
     )
 
     args = parser.parse_args()
@@ -144,80 +159,6 @@ class VicunaWithSpecialToken(Vicuna):
         return example
 
 
-class VicunaWithTypeEmb(Vicuna):
-    require_system_prompt = False
-
-    def load_model(self):
-        self.model = LlamaModelWTypeEmbedCausalLM.from_pretrained(
-            self.config["model_name"],
-            load_in_8bit=self.config["load_8bit"],
-            device_map="auto",
-            torch_dtype=torch.float16,
-            low_cpu_mem_usage=True,
-        )
-
-        self.model.eval()
-        if torch.__version__ >= "2" and sys.platform != "win32":
-            self.model = torch.compile(self.model)
-
-        return self.model
-
-    def process_fn(self, example, prompt_construct_fn):
-        user_prompt = prompt_construct_fn(example)
-
-        message = (
-            "A chat between a curious user and an artificial intelligence assistant. "
-            "The assistant gives helpful, detailed, and polite answers to the user's questions. "
-            f"USER: {user_prompt} "
-            f"ASSISTANT:"
-        )
-
-        example["message"] = message
-
-        context_str = example["context"]
-        start_index = message.find(context_str)
-        end_index = start_index + len(context_str)
-
-        message = [
-            message[:start_index],
-            message[start_index:end_index],
-            message[end_index:],
-        ]
-
-        tokens = [self.tokenizer.tokenize(t, is_split_into_words=True) for t in message]
-
-        example["type_ids"] = (
-            [0] * (len(tokens[0]) + 1) + [1] * len(tokens[1]) + [0] * len(tokens[2])
-        )
-        tokens = tokens[0] + tokens[1] + tokens[2]
-        example["input_ids"] = [
-            self.tokenizer.bos_token_id
-        ] + self.tokenizer.convert_tokens_to_ids(tokens)
-        example["attention_mask"] = [1] * len(example["input_ids"])
-
-        return example
-
-    @torch.no_grad()
-    def generate(self, data):
-        input_ids = torch.as_tensor(data["input_ids"]).cuda()
-        type_ids = torch.as_tensor(data["type_ids"]).cuda()
-
-        stopping_criteria = self.load_stopping_criteria(input_ids)
-
-        output_ids = self.model.generate(
-            input_ids=input_ids,
-            type_ids=type_ids,
-            generation_config=self.generation_config,
-            stopping_criteria=stopping_criteria,
-        )
-
-        output_ids = output_ids[:, input_ids.shape[1] :]
-
-        responses = self.tokenizer.batch_decode(output_ids, skip_special_tokens=True)
-        responses = self.post_process(responses)
-        return responses
-
-
 def inference(args):
     accelerator = (
         Accelerator(log_with=args.report_to, logging_dir=args.logging_path)
@@ -242,15 +183,24 @@ def inference(args):
         set_seed(args.seed)
 
     pia_builder = AutoPIABuilder.from_name(args.dataset_name)(args.seed)
-    pia_samples = pia_builder(args.context_data_file, args.attack_data_file)
+
+    if args.use_clean:
+        pia_samples = pia_builder(
+            args.context_data_file, {"None": ""}, insert_fns=[no_insert]
+        )
+    else:
+        pia_samples = pia_builder(args.context_data_file, args.attack_data_file)
+
     pia_dataset = Dataset.from_pandas(pia_samples)
 
     config = {"load_8bit": False, "model_name": args.model_name_or_path}
 
     if args.add_special_context_token:
-        llm = VicunaWithSpecialToken(config=config, accelerator=accelerator)
-    elif args.add_context_type_embedding:
-        llm = VicunaWithTypeEmb(config=config, accelerator=accelerator)
+        llm = VicunaWithSpecialToken(
+            config=config,
+            accelerator=accelerator,
+            tensor_parallel_size=args.tensor_parallel_size,
+        )
 
     def rename_target(example):
         example["target"] = example["ideal"]
@@ -269,6 +219,11 @@ def inference(args):
                 prompt_construct_fn=partial(
                     pia_builder.construct_prompt,
                     require_system_prompt=llm.require_system_prompt,
+                    ign_guidance=(
+                        IGN_GUIDANCES[args.dataset_name]
+                        if args.add_ign_guidance
+                        else ""
+                    ),
                 ),
             ),
             remove_columns=DATA_INFO[args.dataset_name],
@@ -299,8 +254,15 @@ def inference(args):
                         else:
                             msg = " ".join([j["content"] for j in obj["message"]])
 
-                        if msg in needed_messages:
-                            out.append(obj)
+                        if msg in needed_messages and msg not in exist_messages:
+                            if needed_messages[msg] == 1:
+                                out.append(obj)
+                            else:
+                                for position in ["middle", "start"]:
+                                    new_obj = copy.deepcopy(obj)
+                                    new_obj["position"] = new_obj
+                                    out.append(new_obj)
+
                             exist_messages.add(msg)
 
             def filter_fn(example):
@@ -319,13 +281,13 @@ def inference(args):
 
             if len(processed_datasets) == 0:
                 logger.info("Already Finished. No need to resume.")
+
                 if args.output_path:
                     with jsonlines.open(args.output_path, "w") as writer:
                         writer.write_all(out)
                 exit(0)
 
-            num_examples = len(processed_datasets)
-            logger.info(f"Need to process {num_examples} samples.")
+            logger.info(f"Need to process {len(processed_datasets)} samples.")
         else:
             output_path.parent.mkdir(exist_ok=True, parents=True)
 

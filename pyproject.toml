@@ -20,6 +20,8 @@ dependencies = [
     "transformers>=4.34.0",
     "accelerate>=0.15.0",
     "datasets>=2.8.0",
+    "evaluate",
+    "rouge-score",
     "tqdm",
     "wandb",
     "peft",
@@ -39,7 +41,7 @@ Source = "https://github.com/microsoft/BIPIA"
 Tracker = "https://github.com/microsoft/BIPIA/issues"
 
 [tool.setuptools.packages.find]
-where = "src"
+where = "bipia"
 exclude = ["tests", "examples"]
 
 [tool.wheel]

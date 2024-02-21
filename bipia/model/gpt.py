@@ -92,8 +92,6 @@ class GPTModel(BaseModel):
             logger.warning(e, exc_info=True)
             rslts = []
 
-        # TODO remove
-        time.sleep(self.config.get("slow", 0))
         return rslts
 
     def completion(
@@ -149,9 +147,6 @@ class GPTModel(BaseModel):
                 response = {"choices": []}
 
         rslts = [i["text"] for i in response["choices"]]
-
-        # TODO remove
-        time.sleep(self.config.get("slow", 0))
         return rslts
 
     def generate(self, data: Any, **kwargs):

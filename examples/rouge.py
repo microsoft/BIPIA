@@ -2,12 +2,11 @@
 # Licensed under the MIT License.
 
 from rouge_score import rouge_scorer, scoring
+
 import evaluate
 
 
 class Tokenizer:
-    """Helper class to wrap a callable into a class with a `tokenize` method as used by rouge-score."""
-
     def __init__(self, tokenizer_func):
         self.tokenizer_func = tokenizer_func
 

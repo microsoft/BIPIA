@@ -141,13 +141,7 @@ Arguments:
 
 
 We then download the fine-tune model and evaluate with our BIPIA benchmark.
-
 ``` bash
-pip install transformers==4.34.0
-mkdir -p ../{model}/{RESPONSE_STRATEGY}/checkpoint-{step}
-cp -r {MODEL_SAVE_PATH}/checkpoint-{step}/*.json ../{MODELMODEL}/{RESPONSE_STRATEGY}/checkpoint-{step}
-cp -r {MODEL_SAVE_PATH}/checkpoint-{step}/*.bin ../{model}/{RESPONSE_STRATEGY}/checkpoint-{step}
-cp -r {MODEL_SAVE_PATH}/checkpoint-{step}/*.model ../{MODEL}/{RESPONSE_STRATEGY}/checkpoint-{step}
 cd defense/white_box
 python eval.py 
   --seed {SEED} \
@@ -155,8 +149,8 @@ python eval.py
   --context_data_file ../bipia/{TASK}/test.jsonl \
   --attack_data_file ../bipia/{ATTACK_TYPE}_attack_test.json \
   --batch_size 200 \
-  --output_path {OUTPUT_PATH}} \
-  --model_name_or_path ../{MODEL}/{RESPONSE_STRATEGY}/checkpoint-{step} \
+  --output_path {OUTPUT_PATH} \
+  --model_name_or_path {MODEL_SAVE_PATH} \
   --log_steps 1
 ```
 
@@ -167,5 +161,6 @@ Arguments:
 - `TASK`: the selected task name, you can choose anyone from `["code", "email", "qa", "abstract", "table"]`
 - `SEED`: the Random seed for reproduction.
 - `ATTACK_TYPE`: we provide two type of attack, and you can choose anyone from `["text", "code"]`
+- `MODEL_SAVE_PATH`: the path of fine-tune model.
 
 ### Black-box Defense
