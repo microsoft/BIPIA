@@ -1,4 +1,10 @@
 # BIPIA
+
+[![Paper](https://img.shields.io/badge/Paper-%F0%9F%8E%93-lightblue?style=flat-square)](https://arxiv.org/abs/2312.14197)
+[![Code](https://img.shields.io/badge/Code-%F0%9F%92%8e-lightgrey?style=flat-square)](https://github.com/microsoft/BIPIA)
+
+
+
 The data and code of our work "Benchmarking and Defending Against Indirect Prompt Injection Attacks on Large Language Models".
 If you believe that the content on this repo infringes your rights, please contact us for requesting a take down.
 
@@ -19,54 +25,10 @@ If you use this code in your research please cite the following [publication](ht
 }
 ```
 
------
-[LICENSE](https://github.com/microsoft/BIPIA/blob/main/LICENSE)
-
+## License
+This project is licensed under the license found in the [LICENSE](https://github.com/microsoft/BIPIA/blob/main/LICENSE) file in the root directory of this source tree. Portions of the source code are based on the evaluate project.
 
 [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct)
-
------
-
-## Responsible AI Transparency Information 
-
-An AI system includes not only the technology, but also the people who will use it, the people who will be affected by it, and the environment in which it is deployed. Creating a system that is fit for its intended purpose requires an understanding of how the technology works, its capabilities and limitations, and how to achieve the best performance. Microsoft has a broad effort to put our AI principles into practice. To find out more, see [Responsible AI principles from Microsoft](https://www.microsoft.com/en-us/ai/responsible-ai).
-
-
-### Use of this code
-
-Our goal in publishing this code is to facilitate reproducibility of our paper in hopes of motivating further research in defending against indirect prompt injection attacks. 
-Our goal is to enhance the reliable and secure utilization of powerful LLMs and to inspire further research on this crucial issue.
-This code should only be used for research on indirect prompt injection attacks.
-
-
-### Project data 
-
-This project includes a dataset with five tasks: Web QA, Email QA, Table QA, Summarization, and Code QA. The data for Email QA comes from [OpenAI Evals](https://github.com/openai/evals), for Table QA from [WikiTableQuestions](https://arxiv.org/abs/1508.00305), and for Code QA from [Stack Exchange](https://archive.org/details/stackexchange).
-The datasets for Web QA and Summarization, due to license reasons, require users to read the usage terms of the source data and download it from the source, then process the data using the scripts we provide. 
-For more information, see `Download the dataset` in the `How to use` section below.
-
-
-### Fairness and Responsible AI testing
-
-At Microsoft, we strive to empower every person on the planet to do more. An essential part of this goal is working to create technologies and products that are fair and inclusive. Fairness is a multi-dimensional, sociotechnical topic and impacts many different aspects of our work.  
-
-When systems are deployed, Responsible AI testing should be performed to ensure safe and fair operation for the specific use case. No Responsible AI testing has been done to evaluate this method including validating fair outcomes across different groups of people. Responsible AI testing should be done before using this code in any production scenario. 
-
-> Note: The documentation included in this ReadMe file is for informational purposes only and is not intended to supersede the applicable license terms. 
-
-## Contributing
-
-This project welcomes contributions and suggestions.  Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
-
-When you submit a pull request, a CLA bot will automatically determine whether you need to provide
-a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
-provided by the bot. You will only need to do this once across all repos using our CLA.
-
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
-contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
 
 ## Requirements
@@ -114,7 +76,7 @@ For different task of different split (train/test), set `context_data_fileset` a
 
 
 
-### Evaluation
+#### Evaluation
 In our work, we evaluate the robustness of 25 existing large language models to indirect prompt injection attacks on BIPIA.
 To reproduce the evaluation results in our paper, execute the following commands.
 
@@ -155,3 +117,44 @@ Meanwhile, we relase our defense code for reproducing our results.
 
 See instructions for running defense at [defense/bipia_defense](defense/README.md).
 
+
+## Responsible AI Transparency Information 
+
+An AI system includes not only the technology, but also the people who will use it, the people who will be affected by it, and the environment in which it is deployed. Creating a system that is fit for its intended purpose requires an understanding of how the technology works, its capabilities and limitations, and how to achieve the best performance. Microsoft has a broad effort to put our AI principles into practice. To find out more, see [Responsible AI principles from Microsoft](https://www.microsoft.com/en-us/ai/responsible-ai).
+
+
+### Use of this code
+
+Our goal in publishing this code is to facilitate reproducibility of our paper in hopes of motivating further research in defending against indirect prompt injection attacks. 
+Our goal is to enhance the reliable and secure utilization of powerful LLMs and to inspire further research on this crucial issue.
+This code should only be used for research on indirect prompt injection attacks.
+
+
+### Project data 
+
+This project includes a dataset with five tasks: Web QA, Email QA, Table QA, Summarization, and Code QA. The data for Email QA comes from [OpenAI Evals](https://github.com/openai/evals), for Table QA from [WikiTableQuestions](https://arxiv.org/abs/1508.00305), and for Code QA from [Stack Exchange](https://archive.org/details/stackexchange).
+The datasets for Web QA and Summarization, due to license reasons, require users to read the usage terms of the source data and download it from the source, then process the data using the scripts we provide. 
+For more information, see `Download the dataset` in the `How to use` section below.
+
+
+### Fairness and Responsible AI testing
+
+At Microsoft, we strive to empower every person on the planet to do more. An essential part of this goal is working to create technologies and products that are fair and inclusive. Fairness is a multi-dimensional, sociotechnical topic and impacts many different aspects of our work.  
+
+When systems are deployed, Responsible AI testing should be performed to ensure safe and fair operation for the specific use case. No Responsible AI testing has been done to evaluate this method including validating fair outcomes across different groups of people. Responsible AI testing should be done before using this code in any production scenario. 
+
+> Note: The documentation included in this ReadMe file is for informational purposes only and is not intended to supersede the applicable license terms. 
+
+## Contributing
+
+This project welcomes contributions and suggestions.  Most contributions require you to agree to a
+Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
+the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
+
+When you submit a pull request, a CLA bot will automatically determine whether you need to provide
+a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
+provided by the bot. You will only need to do this once across all repos using our CLA.
+
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
+For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
+contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
