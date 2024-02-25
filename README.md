@@ -4,15 +4,14 @@
 [![Code](https://img.shields.io/badge/Code-%F0%9F%92%8e-lightgrey?style=flat-square)](https://github.com/microsoft/BIPIA)
 
 
-
 The data and code of our work "Benchmarking and Defending Against Indirect Prompt Injection Attacks on Large Language Models".
 If you believe that the content on this repo infringes your rights, please contact us for requesting a take down.
 
 
 ## Overview
-Recent remarkable advancements in large language models (LLMs) have led to their widespread adoption in various applications. A key feature of these applications is the combination of LLMs with external content, where user instructions and third-party content are combined to create prompts for LLM processing. These applications, however, are vulnerable to indirect prompt injection attacks, where malicious instructions embedded within external content compromise LLM's output, causing their responses to deviate from user expectations. Despite the discovery of this security issue, no comprehensive analysis of indirect prompt injection attacks on different LLMs is available due to the lack of a benchmark. Furthermore, no effective defense has been proposed.
+Recent advancements in large language models (LLMs) have led to their adoption across various applications, notably in combining LLMs with external content to generate responses. These applications, however, are vulnerable to indirect prompt injection attacks, where malicious instructions embedded within external content compromise LLM's output, causing their responses to deviate from user expectations. Despite the discovery of this security issue, no comprehensive analysis of indirect prompt injection attacks on different LLMs is available due to the lack of a benchmark. Furthermore, no effective defense has been proposed.
 
-In this work, we introduce the first **b**enchmark of **i**ndirect **p**rompt **i**njection **a**ttack, BIPIA, to measure the robustness of various LLMs and defenses against indirect prompt injection attacks. Our experiments reveal that LLMs with greater capabilities exhibit more vulnerable to indirect prompt injection attacks for text tasks, resulting in a higher ASR. We hypothesize that indirect prompt injection attacks are mainly due to the LLMs' inability to distinguish between instructions and external content. Based on this conjecture, we propose four black-box methods based on prompt learning and a white-box defense methods based on fine-tuning with adversarial training to enable LLMs to distinguish between instructions and external content and ignore instructions in the external content. Our experimental results show that our black-box defense methods can effectively reduce ASR but cannot completely thwart indirect prompt injection attacks, while our white-box defense method can reduce ASR to nearly zero with little adverse impact on the LLM's performance on general tasks. We hope that our benchmark and defenses can inspire future work in this important area.
+We introduce the first **b**enchmark of **i**ndirect **p**rompt **i**njection **a**ttack, BIPIA, to measure the robustness of various LLMs and defenses against indirect prompt injection attacks. We also propose several defenses for both black-box and white-box scenarios. We hope that our benchmark and defenses can inspire future work in this important area.
 
 ## Paper
 If you use this code in your research please cite the following [publication](https://arxiv.org/abs/2312.14197):
@@ -35,22 +34,23 @@ This project is licensed under the license found in the [LICENSE](https://github
 conda envirment preparation
 
 ```bash
-pip3 install --upgrade pip
-pip install -r requirements.txt
+git clone git@github.com:microsoft/BIPIA.git
+pip install .
 ```
 
 ## How to use
+We provide a simple example in [demo.ipynb](demo.ipynb) to demonstrate how to use the code to load the dataset and evaluate the robustness of LLMs to indirect prompt injection attacks.
 
 ### Download the dataset
 In our work, we realse the first **b**enchmark of **i**ndirect **p**rompt **i**njection attack, named BIPIA.
 There are two methods to load the dataset.
 
-- Load dataset with huggingface:
+<!-- - Load dataset from huggingface:
 ```python
 from datasets import load_dataset
 
 dataset = load_dataset("bipia", dataset_name)
-```
+``` -->
 
 - Load dataset with python
 ```Python
@@ -84,7 +84,7 @@ To reproduce the evaluation results in our paper, execute the following commands
 cd examples
 
 # generate respones
-python run.py --seed {seed} --dataset_name {task} \
+python run.py --seed 2023 --dataset_name {task} \
 --context_data_file path/of/external/conten/file \
 --attack_data_file path/of/attack/file \
 --llm_config_file config/{llm_name}.yaml \
@@ -92,7 +92,7 @@ python run.py --seed {seed} --dataset_name {task} \
 --log_steps 10 --resume
 
 # compute attack success rate
-python run.py --mode evaluate --seed {seed} \
+python run.py --mode evaluate --seed 2023 \
 --dataset_name {task} \
 --response_path path/of/output/file \
 --output_path path/of/asr/file \
@@ -100,6 +100,10 @@ python run.py --mode evaluate --seed {seed} \
 --batch_size 20 --log_steps 10 --resume
 ```
 
+Arguments:
+- `task`: the selected task name, you can choose anyone from `["code", "email", "qa", "abstract", "table"]`
+- `llm_name`: the name of the LLMs. Select from the config file in `config` directory.
+- `evaluate_llm_name`: the name of the LLMs for evaluation. Use `gpt35` by default.
 
 ### Defense
 We also propose two type of defense methods.
@@ -108,7 +112,6 @@ We also propose two type of defense methods.
   - Border Strings
   - In-context Learning
   - Multi-turn Dialogue
-  - Datamarking
 
 - Finetuning Defenses
   - Speical Tokens
@@ -144,6 +147,9 @@ At Microsoft, we strive to empower every person on the planet to do more. An ess
 When systems are deployed, Responsible AI testing should be performed to ensure safe and fair operation for the specific use case. No Responsible AI testing has been done to evaluate this method including validating fair outcomes across different groups of people. Responsible AI testing should be done before using this code in any production scenario. 
 
 > Note: The documentation included in this ReadMe file is for informational purposes only and is not intended to supersede the applicable license terms. 
+
+## TODO
+[] Upload the BIPIA dataset to huggingface.
 
 ## Contributing
 

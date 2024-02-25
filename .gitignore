@@ -3,6 +3,9 @@ __pycache__/
 .ipynb_checkpoints/
 
 *.egg-info/
-
+build/
 
 diff.sh
+config/my_gpt35.yaml
+
+output/

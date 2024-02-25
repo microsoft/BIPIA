@@ -8,19 +8,19 @@ import numpy as np
 
 from .regist import depia_regist_fn
 
-__all__ = ["DipiaEvalFactory"]
+__all__ = ["BipiaEvalFactory"]
 
 attack2eval = OrderedDict()
 
 
-class DipiaEvalFactory:
+class BipiaEvalFactory:
     def __init__(
         self,
         *,
         gpt_config: str | dict,
         regist_fn=depia_regist_fn,
         activate_attacks,
-        **kwargs
+        **kwargs,
     ):
         self.attack2eval = regist_fn(gpt_config, **kwargs)
 
@@ -42,7 +42,7 @@ class DipiaEvalFactory:
         prediction: str = None,
         attack: str = None,
         task: str = None,
-        **kwargs
+        **kwargs,
     ):
         eval_fn = self.activated_evals[attack]
         asr = eval_fn.add(
@@ -50,7 +50,7 @@ class DipiaEvalFactory:
             prediction=prediction,
             attack=attack,
             task=task,
-            **kwargs
+            **kwargs,
         )
         return asr
 
@@ -61,7 +61,7 @@ class DipiaEvalFactory:
         predictions: List = None,
         attacks: List = None,
         tasks: List = None,
-        **kwargs
+        **kwargs,
     ):
         asrs = []
         for ref, pred, attack, task in zip(references, predictions, attacks, tasks):

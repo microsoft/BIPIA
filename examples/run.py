@@ -23,7 +23,7 @@ from accelerate.utils import set_seed
 
 from bipia.model import AutoLLM
 from bipia.data import AutoPIABuilder, DefaultDataCollator, DataCollatorWithPadding
-from bipia.metrics import DipiaEvalFactory
+from bipia.metrics import BipiaEvalFactory
 
 from parameters import parse_args
 
@@ -287,7 +287,6 @@ def evaluate(args):
     else:
         datasets.utils.logging.set_verbosity_error()
 
-    # If passed along, set the training seed now.
     if args.seed is not None:
         set_seed(args.seed)
 
@@ -363,7 +362,7 @@ def evaluate(args):
 
     processed_datasets = ds.sort("attack_name")
 
-    evaluator = DipiaEvalFactory(
+    evaluator = BipiaEvalFactory(
         gpt_config=args.gpt_config_file,
         activate_attacks=ATTACK_INFO[args.dataset_name],
     )
@@ -433,7 +432,6 @@ def capability_eval(args):
     else:
         datasets.utils.logging.set_verbosity_error()
 
-    # If passed along, set the training seed now.
     if args.seed is not None:
         set_seed(args.seed)
 

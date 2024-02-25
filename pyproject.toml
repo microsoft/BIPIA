@@ -15,22 +15,24 @@ classifiers = [
 ]
 dependencies = [
     "torch>=2.0.1",
-    "fschat==0.2.35",
+    "fschat>=0.2.35",
     "deepspeed>=0.9.5",
     "transformers>=4.34.0",
     "accelerate>=0.15.0",
     "datasets>=2.8.0",
+    "jsonlines",
     "evaluate",
     "rouge-score",
     "tqdm",
     "wandb",
     "peft",
-    "vllm>=0.1.7",
+    "vllm>=0.2.0",
     "numpy",
     "langdetect",
     "thefuzz",
     "openai==0.28.1",
-    "pandas"
+    "pandas",
+    "emoji"
 ]
 
 
@@ -41,8 +43,7 @@ Source = "https://github.com/microsoft/BIPIA"
 Tracker = "https://github.com/microsoft/BIPIA/issues"
 
 [tool.setuptools.packages.find]
-where = "bipia"
-exclude = ["tests", "examples"]
+exclude = ["tests", "examples", "defense", "config", "benchmark"]
 
 [tool.wheel]
 universal = true

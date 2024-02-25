@@ -23,7 +23,7 @@ from accelerate.utils import set_seed
 from bipia.model import AutoLLM
 from bipia.data import AutoPIABuilder, DefaultDataCollator, DataCollatorWithPadding
 from bipia.data.utils import no_insert
-from bipia.metrics import DipiaEvalFactory
+from bipia.metrics import BipiaEvalFactory
 
 
 def parse_args():
@@ -506,7 +506,7 @@ def evaluate(args):
 
     processed_datasets = ds.sort("attack_name")
 
-    evaluator = DipiaEvalFactory(
+    evaluator = BipiaEvalFactory(
         gpt_config=args.gpt_config_file,
         activate_attacks=ATTACK_INFO[args.dataset_name],
     )
