@@ -149,7 +149,7 @@ When systems are deployed, Responsible AI testing should be performed to ensure 
 > Note: The documentation included in this ReadMe file is for informational purposes only and is not intended to supersede the applicable license terms. 
 
 ## TODO
-[] Upload the BIPIA dataset to huggingface.
+- [ ] Upload the BIPIA dataset to huggingface.
 
 ## Contributing
 
