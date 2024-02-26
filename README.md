@@ -65,14 +65,14 @@ pia_samples = pia_builder(
 pia_dataset = Dataset.from_pandas(pia_samples)
 ```
 
-For different task of different split (train/test), set `context_data_fileset` as the files in `benchmark/{task}/{train|test}.jsonl` directory.  set `attack_data_file` as `benchmark/{code|text}_attack_{train|test}.json`. The configureation of `dataset_name` is as follows:
+For different task of different split (train/test), set `context_data_file` as the files in `benchmark/{task}/{train|test}.jsonl` directory.  set `attack_data_file` as `benchmark/{code|text}_attack_{train|test}.json`. The configureation of `dataset_name` is as follows:
 - EmailQA: set `dataset_name` as `email`
 - WebQA: set `dataset_name` as `qa`
 - Summarization: set `dataset_name` as `abstract`
 - TableQA: set `dataset_name` as `table`
 - CodeQA: set `dataset_name` as `code`
 
-*Note: For Summarization and WebQA task, due to license issues, please follow the guidelines in [benchmark/README.md](benchmark/README.md) to generate `context_data_fileset`.*
+*Note: For Summarization and WebQA task, due to license issues, please follow the guidelines in [benchmark/README.md](benchmark/README.md) to generate `context_data_file`.*
 
 
 
