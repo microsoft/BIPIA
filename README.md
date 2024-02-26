@@ -42,8 +42,8 @@ pip install .
 We provide a simple example in [demo.ipynb](demo.ipynb) to demonstrate how to use the code to load the dataset and evaluate the robustness of LLMs to indirect prompt injection attacks.
 
 ### Download the dataset
-In our work, we realse the first **b**enchmark of **i**ndirect **p**rompt **i**njection attack, named BIPIA.
-There are two methods to load the dataset.
+<!-- In our work, we realse the first **b**enchmark of **i**ndirect **p**rompt **i**njection attack, named BIPIA.
+There are two methods to load the dataset. -->
 
 <!-- - Load dataset from huggingface:
 ```python
@@ -52,7 +52,7 @@ from datasets import load_dataset
 dataset = load_dataset("bipia", dataset_name)
 ``` -->
 
-- Load dataset with python
+Load BIPIA dataset with the following python script:
 ```Python
 from bipia import AutoPIABuilder
 
