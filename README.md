@@ -13,26 +13,9 @@ Recent advancements in large language models (LLMs) have led to their adoption a
 
 We introduce the first **b**enchmark of **i**ndirect **p**rompt **i**njection **a**ttack, BIPIA, to measure the robustness of various LLMs and defenses against indirect prompt injection attacks. We also propose several defenses for both black-box and white-box scenarios. We hope that our benchmark and defenses can inspire future work in this important area.
 
-## Paper
-If you use this code in your research please cite the following [publication](https://arxiv.org/abs/2312.14197):
-```
-@article{yi2023benchmarking,
-  title={Benchmarking and Defending Against Indirect Prompt Injection Attacks on Large Language Models},
-  author={Yi, Jingwei and Xie, Yueqi and Zhu, Bin and Hines, Keegan and Kiciman, Emre and Sun, Guangzhong and Xie, Xing and Wu, Fangzhao},
-  journal={arXiv preprint arXiv:2312.14197},
-  year={2023}
-}
-```
-
-## License
-This project is licensed under the license found in the [LICENSE](https://github.com/microsoft/BIPIA/blob/main/LICENSE) file in the root directory of this source tree. Portions of the source code are based on the evaluate project.
-
-[Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct)
-
 
 ## Requirements
-conda envirment preparation
-
+Install bipia and its dependencies from source:
 ```bash
 git clone git@github.com:microsoft/BIPIA.git
 pip install .
@@ -120,6 +103,11 @@ Meanwhile, we relase our defense code for reproducing our results.
 
 See instructions for running defense at [defense/bipia_defense](defense/README.md).
 
+## License
+This project is licensed under the license found in the [LICENSE](https://github.com/microsoft/BIPIA/blob/main/LICENSE) file in the root directory of this source tree. Portions of the source code are based on the evaluate project.
+
+[Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct)
+
 
 ## Responsible AI Transparency Information 
 
@@ -148,6 +136,7 @@ When systems are deployed, Responsible AI testing should be performed to ensure 
 
 > Note: The documentation included in this ReadMe file is for informational purposes only and is not intended to supersede the applicable license terms. 
 
+
 ## TODO
 - [ ] Upload the BIPIA dataset to huggingface.
 
@@ -164,3 +153,14 @@ provided by the bot. You will only need to do this once across all repos using o
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
 contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+
+## Paper
+If you use this code in your research please cite the following [publication](https://arxiv.org/abs/2312.14197):
+```
+@article{yi2023benchmarking,
+  title={Benchmarking and Defending Against Indirect Prompt Injection Attacks on Large Language Models},
+  author={Yi, Jingwei and Xie, Yueqi and Zhu, Bin and Hines, Keegan and Kiciman, Emre and Sun, Guangzhong and Xie, Xing and Wu, Fangzhao},
+  journal={arXiv preprint arXiv:2312.14197},
+  year={2023}
+}
+```
